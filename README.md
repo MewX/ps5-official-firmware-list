@@ -5,10 +5,15 @@ The community-contributed PlayStation 5 official firmware list with checksums.
 
 ## The Full List
 
+### 10.x
 | Firmware Version (Long)        | Version (Short) | Type     | Build Date      | sha256                                                           | md5 checksum                     | size   |
 | ------------------------------ | --------------- | -------- | --------------- | ---------------------------------------------------------------- | -------------------------------- | ------ |
 | 24.06-10.00.00.46-00.00.00.0.1 | 10.00.00        | Update   | 2024_0903       | 47bc4bcd8323c0c5db14c333da84a1c572279df727e32cd421f478233c5b0c73 | 3b817f067ec2178ef547b33ede0928c8 | size   |
 | 24.06-10.00.00.46-00.00.00.0.1 | 10.00.00        | Recovery | 2024_0903       | 86d0aedf9512596bbe30a312165fed4caac37109469a63cd99d20514d5fbcb7f | c004fe9abc2e94ddd5b563bc637d582c | size   |
+
+### 09.x
+| Firmware Version (Long)        | Version (Short) | Type     | Build Date      | sha256                                                           | md5 checksum                     | size   |
+| ------------------------------ | --------------- | -------- | --------------- | ---------------------------------------------------------------- | -------------------------------- | ------ |
 | 24.05-09.60.00.04-00.00.00.0.1 | 09.60.00        | Update   | 2024_0718       | 2db810ab78ea92aafef8c0202993a924274d53049c3de0e25f983188acc8b2a3 | e44abef6e1436ee87a0e7861ab1779c2 | 1192286720 B |
 | 24.05-09.60.00.04-00.00.00.0.1 | 09.60.00        | Recovery | 2024_0718       | 818b97764b2e838269cf49f53070d1472559c576daa002bf134ddfaec459364e | 6fd55056d524ef531d315d55bb41d6e0 | 1343993856 B |
 | 24.04-09.40.00.08-00.00.00.0.1 | 09.40.00        | Update   | 2024_0607       | e631e06cd1d884ca2692158449b9d89924e88e91ed82fc15e87c1abb0a401e0e | 1f6def92f144a112cb90bf6f22f37eec | 1189964800 B |
@@ -17,6 +22,10 @@ The community-contributed PlayStation 5 official firmware list with checksums.
 | 24.03-09.20.00.05-00.00.00.0.1 | 09.20.00        | Recovery | 2024_0418       | 9a4be7beadb702f5dcf65fd4f360af985d61b938f8d2c11bf0f689b8868325e6 | md5                              | size   |
 | 24.02-09.00.00.45-00.00.00.0.1 | 09.00.00        | Update   | 2024_0309       | e061c9c8bf711202afd13da7f7ea76729a5708e572788bee9e0cbe5d40f70d28 | md5                              | size   |
 | 24.02-09.00.00.45-00.00.00.0.1 | 09.00.00        | Recovery | 2024_0309       | 236c69911146b63ab4e92e8f508911e45bd9a7ef2dcc59245d4fe1d2b5c4e5d7 | md5                              | size   |
+
+### 08.x
+| Firmware Version (Long)        | Version (Short) | Type     | Build Date      | sha256                                                           | md5 checksum                     | size   |
+| ------------------------------ | --------------- | -------- | --------------- | ---------------------------------------------------------------- | -------------------------------- | ------ |
 | TODO fw version long           | 08.60.00        | Update   | todo Build Date | sha256                                                           | f51fe7ef9114ea3ad277a8e03145ac4e | 1130MB |
 | TODO fw version long           | 08.60.00        | Recovery | todo Build Date | sha256                                                           | fb8ed22a2c790415263fb5fd1460e72b | 1275MB |
 | TODO fw version long           | 08.40.00        | Update   | todo Build Date | sha256                                                           | 49cdf61248ded0bca48f524e94817fc4 | 1129MB |
@@ -28,6 +37,10 @@ The community-contributed PlayStation 5 official firmware list with checksums.
 | TODO fw version long           | 08.20.00        | Recovery | todo Build Date | sha256                                                           | 140e49033e839967c4a446c741201984 | 1305MB |
 | TODO fw version long           | 08.00.00        | Update   | todo Build Date | sha256                                                           | 7616128c57581d5e49b42d1b3f308232 | 1146MB |
 | TODO fw version long           | 08.00.00        | Recovery | todo Build Date | sha256                                                           | 6cbb7a2fa2ace926202bd6e71304fb06 | 1294MB |
+
+### 07.x
+| Firmware Version (Long)        | Version (Short) | Type     | Build Date      | sha256                                                           | md5 checksum                     | size   |
+| ------------------------------ | --------------- | -------- | --------------- | ---------------------------------------------------------------- | -------------------------------- | ------ |
 | TODO fw version long           | 07.61.00        | Update   | todo Build Date | sha256                                                           | d5eca8b171a8d7df7ba225167f77e645 | 1123MB |
 | TODO fw version long           | 07.61.00        | Recovery | todo Build Date | sha256                                                           | 932f24e934723050fe49561b67e95226 | 1271MB |
 | TODO fw version long           | 07.60.00        | Update   | todo Build Date | sha256                                                           | 9001b6c6e70d4665f9b09c5f766b1361 | 1123MB |
@@ -43,6 +56,10 @@ The community-contributed PlayStation 5 official firmware list with checksums.
 | TODO fw version long           | 07.01.00        | Recovery | todo Build Date | sha256                                                           | 82659d7e4e39b422b7e42fe4be5a8e7c | 1257MB |
 | TODO fw version long           | 07.00.00        | Update   | todo Build Date | sha256                                                           | 1e5a9eb04bd6337b939c6a05559615ec | 1114MB |
 | TODO fw version long           | 07.00.00        | Recovery | todo Build Date | sha256                                                           | 30d6c5366bff79b266d3a250eb498e9f | 1257MB |
+
+### 06.x
+| Firmware Version (Long)        | Version (Short) | Type     | Build Date      | sha256                                                           | md5 checksum                     | size   |
+| ------------------------------ | --------------- | -------- | --------------- | ---------------------------------------------------------------- | -------------------------------- | ------ |
 | TODO fw version long           | 06.50.00        | Update   | todo Build Date | sha256                                                           | 98db854ba47a75dff0cb09355bca9025 | 1065MB |
 | TODO fw version long           | 06.50.00        | Recovery | todo Build Date | sha256                                                           | 4305223c12bd6dda9b944c0ee49c94c0 | 1208MB |
 | TODO fw version long           | 06.02.00        | Update   | todo Build Date | sha256                                                           | 17b271de081eb6eb25dbf70cb73ef9e8 | 1060MB |
@@ -52,6 +69,10 @@ The community-contributed PlayStation 5 official firmware list with checksums.
 | TODO fw version long           | 06.00.01        | Recovery | todo Build Date | sha256                                                           | 557fc2da7447891648f01aee3eaf2e77 | 1203MB |
 | TODO fw version long           | 06.00.00        | Update   | todo Build Date | sha256                                                           | ec2841a47266cd19e1c69a2d6f820ab4 | 1060MB |
 | TODO fw version long           | 06.00.00        | Recovery | todo Build Date | sha256                                                           | d640d679cf07fd7cf3e20f1c1ff6a707 | 1203MB |
+
+### 05.x
+| Firmware Version (Long)        | Version (Short) | Type     | Build Date      | sha256                                                           | md5 checksum                     | size   |
+| ------------------------------ | --------------- | -------- | --------------- | ---------------------------------------------------------------- | -------------------------------- | ------ |
 | TODO fw version long           | 05.50.00        | Update   | todo Build Date | sha256                                                           | edb3513ec531b2bd28f3a0b52a82a54f | 1011MB |
 | TODO fw version long           | 05.50.00        | Recovery | todo Build Date | sha256                                                           | c939ac8b37e07bbc129816a61002d30a | 1120MB |
 | TODO fw version long           | 05.10.00        | Update   | todo Build Date | sha256                                                           | 20632a2295ffde21956fae192fe96de6 | 1011MB |
@@ -60,6 +81,10 @@ The community-contributed PlayStation 5 official firmware list with checksums.
 | TODO fw version long           | 05.02.00        | Recovery | todo Build Date | sha256                                                           | 8ebc1be2e0cfe229f251908714fa8628 | 1120MB |
 | TODO fw version long           | 05.00.00        | Update   | todo Build Date | sha256                                                           | 3793993a90347c10223a19c38a643bc7 | 1007MB |
 | TODO fw version long           | 05.00.00        | Recovery | todo Build Date | sha256                                                           | 65a45d5ba00e9ce8fea46492a6fc31a0 | 1120MB |
+
+### 04.x
+| Firmware Version (Long)        | Version (Short) | Type     | Build Date      | sha256                                                           | md5 checksum                     | size   |
+| ------------------------------ | --------------- | -------- | --------------- | ---------------------------------------------------------------- | -------------------------------- | ------ |
 | TODO fw version long           | 04.51.00        | Update   | todo Build Date | sha256                                                           | 1330b7bf63bf5c93d809b1eb1f4e1f01 | 871MB  |
 | TODO fw version long           | 04.51.00        | Recovery | todo Build Date | sha256                                                           | da78ca268da90a963d89b0f45db0f061 | 1011MB |
 | TODO fw version long           | 04.50.00        | Update   | todo Build Date | sha256                                                           | 74e80b800b90a6d01c4b2a25839b1ff5 | 871MB  |
@@ -70,6 +95,10 @@ The community-contributed PlayStation 5 official firmware list with checksums.
 | TODO fw version long           | 04.02.00        | Recovery | todo Build Date | sha256                                                           | 625980de711170313d115ebb81a43ad3 | 1011MB |
 | TODO fw version long           | 04.00.00        | Update   | todo Build Date | sha256                                                           | a8a93bfeff28ef316375472603370227 | 871MB  |
 | TODO fw version long           | 04.00.00        | Recovery | todo Build Date | sha256                                                           | 6621694d05e79ec57f7ca1b57b84a853 | 1011MB |
+
+### 03.x
+| Firmware Version (Long)        | Version (Short) | Type     | Build Date      | sha256                                                           | md5 checksum                     | size   |
+| ------------------------------ | --------------- | -------- | --------------- | ---------------------------------------------------------------- | -------------------------------- | ------ |
 | TODO fw version long           | 03.21.00        | Update   | todo Build Date | sha256                                                           | 8154d84e6a17267bbd35331ad83a5b13 | 860MB  |
 | TODO fw version long           | 03.21.00        | Recovery | todo Build Date | sha256                                                           | 889ed0e5f834388d997cc057c591d388 | 1000MB |
 | TODO fw version long           | 03.20.00        | Update   | todo Build Date | sha256                                                           | f62f0d595d3f00c213d674d4db2a7e44 | 860MB  |
@@ -78,6 +107,10 @@ The community-contributed PlayStation 5 official firmware list with checksums.
 | TODO fw version long           | 03.10.00        | Recovery | todo Build Date | sha256                                                           | 2a91cfde890092c28f93092044712d65 | 1000MB |
 | TODO fw version long           | 03.00.00        | Update   | todo Build Date | sha256                                                           | bce0759c4adb3adc7f0bc3e379db0e35 | 860MB  |
 | TODO fw version long           | 03.00.00        | Recovery | todo Build Date | sha256                                                           | 2a7536d351b7444292d0ba45fae52213 | 1000MB |
+
+### 02.x
+| Firmware Version (Long)        | Version (Short) | Type     | Build Date      | sha256                                                           | md5 checksum                     | size   |
+| ------------------------------ | --------------- | -------- | --------------- | ---------------------------------------------------------------- | -------------------------------- | ------ |
 | TODO fw version long           | 02.50.00        | Update   | todo Build Date | sha256                                                           | f45870dea85a8c6899cc5ad41a699b0d | 828MB  |
 | TODO fw version long           | 02.50.00        | Recovery | todo Build Date | sha256                                                           | 9da9290f676bc04ab6561aa401d35d8b | 959MB  |
 | TODO fw version long           | 02.30.00        | Update   | todo Build Date | sha256                                                           | c0bcaf194dc612151108777357e3eb0f | 827MB  |
@@ -89,6 +122,10 @@ The community-contributed PlayStation 5 official firmware list with checksums.
 | TODO fw version long           | 02.20.00        | Update   | todo Build Date | sha256                                                           | 0ba454afc42479d66e575228d2ad8d9a | 827MB  |
 | TODO fw version long           | 02.20.00        | Recovery | todo Build Date | sha256                                                           | bce6d95fff80f2452d5f6066148c8d87 | 959MB  |
 | TODO fw version long           | 02.00.00        | Update   | todo Build Date | sha256                                                           | d6ab78465da879b31809b8d7c9cb7746 | 827MB  |
+
+### 01.x
+| Firmware Version (Long)        | Version (Short) | Type     | Build Date      | sha256                                                           | md5 checksum                     | size   |
+| ------------------------------ | --------------- | -------- | --------------- | ---------------------------------------------------------------- | -------------------------------- | ------ |
 | TODO fw version long           | 01.14.00        | Update   | todo Build Date | sha256                                                           | d3cf1f0c86c510b728b3307ddc5b57d1 | 767MB  |
 | TODO fw version long           | 01.12.00        | Update   | todo Build Date | sha256                                                           | b81df1de5c73db261bc91f97e41dba3c | 767MB  |
 
