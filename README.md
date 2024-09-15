@@ -1,4 +1,4 @@
-![image](https://github.com/user-attachments/assets/8f745c53-eb07-459a-8ea3-2b0492e82e9d)# PlayStation 5 Offical Firmware List
+# PlayStation 5 Offical Firmware List
 The community-contributed PlayStation 5 official firmware list with checksums.
 
 **Note that no downloads will be provided from this repo. However, if you download the firmware from somewhere else, then you can look up this table for the checksums.**
