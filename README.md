@@ -1,15 +1,17 @@
 # PlayStation 5 Offical Firmware List
 The community-contributed PlayStation 5 official firmware list with checksums.
 
-**Note that no downloads will be provided from this repo. However, if you download the firmware from somewhere else, then you can look up this table for the checksums.**
+**Note that no downloads will be offered by this repo. However, if you download the firmware from somewhere else, then you can look up this table for the checksums.**
 
 ## The Full List
+
+To download the latest firmware, go to: https://www.playstation.com/en-us/support/hardware/ps5/system-software/.
 
 ### 10.x
 | Firmware Version (Long)        | Version (Short) | Type     | Build Date      | sha256                                                           | md5 checksum                     | size   |
 | ------------------------------ | --------------- | -------- | --------------- | ---------------------------------------------------------------- | -------------------------------- | ------ |
-| 24.06-10.00.00.46-00.00.00.0.1 | 10.00.00        | Update   | 2024_0903       | 47bc4bcd8323c0c5db14c333da84a1c572279df727e32cd421f478233c5b0c73 | 3b817f067ec2178ef547b33ede0928c8 | size   |
-| 24.06-10.00.00.46-00.00.00.0.1 | 10.00.00        | Recovery | 2024_0903       | 86d0aedf9512596bbe30a312165fed4caac37109469a63cd99d20514d5fbcb7f | c004fe9abc2e94ddd5b563bc637d582c | size   |
+| 24.06-10.00.00.46-00.00.00.0.1 | 10.00.00        | Update   | 2024_0903       | 47bc4bcd8323c0c5db14c333da84a1c572279df727e32cd421f478233c5b0c73 | 3b817f067ec2178ef547b33ede0928c8 | 1292805632 B |
+| 24.06-10.00.00.46-00.00.00.0.1 | 10.00.00        | Recovery | 2024_0903       | 86d0aedf9512596bbe30a312165fed4caac37109469a63cd99d20514d5fbcb7f | c004fe9abc2e94ddd5b563bc637d582c | 1444511744 B |
 
 ### 09.x
 | Firmware Version (Long)        | Version (Short) | Type     | Build Date      | sha256                                                           | md5 checksum                     | size   |
