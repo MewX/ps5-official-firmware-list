@@ -17,7 +17,36 @@ page_content=$(curl -s "$ps5_updates_url")
 # Check if the page content contains the search string
 if [[ $page_content == *"$search_string"* ]]; then
     echo "Firmware list is up-to-date because '$search_string' was found on the page."
+    exit
 else
     echo "Firmware list is outdated because '$search_string' was not found."
 fi
 
+quoted_strings=$(echo "$page_content" | grep -oE '"[^"]*PS5UPDATE\.PUP"' | tr -d '"')
+if [[ -n "$quoted_strings" ]]; then
+  for string in $quoted_strings; do
+    echo "Downloading $string"
+
+    # Extract YYYY_MMDD and TYPE using regular expression
+    if [[ "$string" =~ https://[^/]+/update/ps5/official/[^/]+/image/([0-9]{4}_[0-9]{4})/([^_]+)_ ]]; then
+      YYYY_MMDD="${BASH_REMATCH[1]}"
+      TYPE="${BASH_REMATCH[2]}"
+
+      # Create custom folder
+      folder_name="${YYYY_MMDD} ${TYPE}"
+
+      # Normalize the folder names: Replace 'rec' with 'Recovery' and 'sys' with 'Update'.
+      folder_name="${folder_name//rec/Recovery}"
+      folder_name="${folder_name//sys/Update}"
+      mkdir -p "$folder_name"
+
+      # Download the file into the folder
+      curl -s -L "$string" -o "$folder_name/PS5UPDATE.PUP"
+      echo "Downloaded to: $folder_name/PS5UPDATE.PUP"
+    else
+      echo "ERROR: Unable to parse URL: $string"
+    fi
+  done
+else
+  echo "ERROR: No matching strings found."
+fi
