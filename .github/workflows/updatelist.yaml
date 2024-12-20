@@ -1,0 +1,44 @@
+name: Check updatelist.xml
+
+on:
+  schedule:
+    - cron: '0 0 * * *' # Run every day at midnight UTC
+
+jobs:
+  update-repository:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Run update script
+        run: bash check_updatelist.sh
+
+      - name: Check for changes
+        id: git-check
+        run: |
+          git diff --exit-code
+          echo "::set-output name=has_changes::$?"
+
+      - name: Check for existing PR
+        if: steps.git-check.outputs.has_changes == '1'
+        id: check-pr
+        run: |
+          gh pr list --head "auto-update" --base "main" --json number -q '..number' > pr_numbers.txt
+          if [ -s pr_numbers.txt ]; then
+            echo "::set-output name=pr_exists::true"
+          else
+            echo "::set-output name=pr_exists::false"
+          fi
+
+      - name: Create Pull Request
+        if: steps.git-check.outputs.has_changes == '1' && steps.check-pr.outputs.pr_exists == 'false' 
+        uses: peter-evans/create-pull-request@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: 'Automated updating updatelist.xml'
+          title: 'Automated updating updatelist.xml'
+          body: 'A newer updatelist.xml has been found.'
+          branch: 'auto-updatelist'
+          base: 'main'
