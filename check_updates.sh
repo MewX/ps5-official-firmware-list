@@ -61,6 +61,9 @@ if [[ -n "$quoted_strings" ]]; then
       # Save checksums to files
       echo "$sha256sum" > "$folder_name/PS5UPDATE.PUP.sha256"
       echo "$md5sum" > "$folder_name/PS5UPDATE.PUP.md5"
+      # Also saves the URL for reference.
+      echo "$string" > "$folder_name/PS5UPDATE.PUP.url" 
+
     else
       echo "ERROR: Unable to parse URL: $string"
     fi
