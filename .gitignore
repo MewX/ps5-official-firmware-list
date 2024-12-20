@@ -1,5 +1,8 @@
 # Firmware files.
 *.PUP
+*.url
+*.sha256
+*.md5
 
 # Logs
 logs
