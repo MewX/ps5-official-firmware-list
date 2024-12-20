@@ -3,6 +3,15 @@ The community-contributed PlayStation 5 official firmware list with checksums.
 
 **Note that no downloads will be offered by this repo. However, if you download the firmware from somewhere else, then you can look up this table for the checksums.**
 
+## Update List files
+Format： `http://f<TLD>01.ps5.update.playstation.net/update/ps5/official/<OBFUSCATED_STRING>/list/<TLD>/updatelist.xml`.
+
+Examples:
+```
+http://fjp01.ps5.update.playstation.net/update/ps5/official/tJMRE80IbXnE9YuG0jzTXgKEjIMoabr6/list/jp/updatelist.xml
+http://fus01.ps5.update.playstation.net/update/ps5/official/tJMRE80IbXnE9YuG0jzTXgKEjIMoabr6/list/us/updatelist.xml
+```
+
 ## The Full List
 
 To download the latest firmware, go to: https://www.playstation.com/en-us/support/hardware/ps5/system-software/.
@@ -10,8 +19,8 @@ To download the latest firmware, go to: https://www.playstation.com/en-us/suppor
 ### 10.x
 | Firmware Version (Long)        | Version (Short) | Type     | Build Date      | sha256                                                           | md5 checksum                     | size   |
 | ------------------------------ | --------------- | -------- | --------------- | ---------------------------------------------------------------- | -------------------------------- | ------ |
-| 24.07-10.40.00.??-00.00.00.0.1 | 10.40.00        | 🆙 Update   | 2024_1127       | 552129eff6730cd7e299a599c5266320ad34a08938e01819278caf9af4e1fe69 | 94a72c5b703b9ded7202f49379c4fba2 | 1319701504 B |
-| 24.07-10.40.00.??-00.00.00.0.1 | 10.40.00        | ❤️‍🩹 Recovery | 2024_1127       | 20697d8358c2748bbb4b73e6b7b98480ea606147a7263e26fba15efd9b9d350a | fe0c8ad9c44108b0d1189b3cac90c327 | 1471407616 B |
+| 24.08-10.40.00.07-00.00.00.0.1 | 10.40.00        | 🆙 Update   | 2024_1127       | 552129eff6730cd7e299a599c5266320ad34a08938e01819278caf9af4e1fe69 | 94a72c5b703b9ded7202f49379c4fba2 | 1319701504 B |
+| 24.08-10.40.00.07-00.00.00.0.1 | 10.40.00        | ❤️‍🩹 Recovery | 2024_1127       | 20697d8358c2748bbb4b73e6b7b98480ea606147a7263e26fba15efd9b9d350a | fe0c8ad9c44108b0d1189b3cac90c327 | 1471407616 B |
 | 24.07-10.20.00.06-00.00.00.0.1 | 10.20.00        | 🆙 Update   | 2024_1017       | 811dc7f53ee6c710dd6725ae0be286436e1ee3df44416d8feaeb8cf17c80a646 | dc2e888a61785c0edaab88c607c626ef | 1316996096 B |
 | 24.07-10.20.00.06-00.00.00.0.1 | 10.20.00        | ❤️‍🩹 Recovery | 2024_1017       | 7e26df04622a307981c6233012f1c852cee9376f28af2a5c2a2f7489f6e6133a | 2452d8556281845012e10cef04162fff | 1468702208 B |
 | 24.06-10.00.00.46-00.00.00.0.1? | 10.01.00?        | 🆙 Update   | 2024_0918       | f6724d78a4965c170575a7485d1e20bd7e4001457829f98a978e8ec73acdfa6e | 68a31944c1867bf9643798fd1c14998e | 1292784128 B |
