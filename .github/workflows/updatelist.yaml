@@ -30,7 +30,7 @@ jobs:
         if: steps.git-check.outputs.has_changes == '1'
         id: check-pr
         run: |
-          gh pr list --head "auto-update" --base "main" --json number -q '..number' > pr_numbers.txt
+          gh pr list --head "auto-update" --base "main" --json number -q '. | .number' > pr_numbers.txt
           if [ -s pr_numbers.txt ]; then
             echo "::set-output name=pr_exists::true"
           else
