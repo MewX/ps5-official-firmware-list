@@ -17,7 +17,7 @@ page_content=$(curl -s "$ps5_updates_url")
 # Check if the page content contains the search string
 if [[ $page_content == *"$search_string"* ]]; then
     echo "Firmware list is up-to-date because '$search_string' was found on the page."
-    exit
+    exit 0
 else
     echo "Firmware list is outdated because '$search_string' was not found."
 fi
@@ -34,10 +34,16 @@ if [[ -n "$quoted_strings" ]]; then
 
       # Create custom folder
       folder_name="${YYYY_MMDD} ${TYPE}"
-
       # Normalize the folder names: Replace 'rec' with 'Recovery' and 'sys' with 'Update'.
       folder_name="${folder_name//rec/Recovery}"
       folder_name="${folder_name//sys/Update}"
+
+      # Check if folder already exists
+      if [[ -d "$folder_name" ]]; then
+        echo "Error: Folder '$folder_name' already exists. Exiting."
+        exit 0
+      fi
+      # Otherwise, we definitely want to create the folder.
       mkdir -p "$folder_name"
 
       # Download the file into the folder
