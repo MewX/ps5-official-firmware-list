@@ -21,7 +21,7 @@ jobs:
       - name: Check for changes
         id: git-check
         run: |
-          git diff --exit-code
+          git diff --exit-code || true # Ignore the exit code
           echo "::set-output name=has_changes::$?"
 
       - name: Check for existing PR
