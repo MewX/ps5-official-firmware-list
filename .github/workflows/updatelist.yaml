@@ -1,5 +1,8 @@
 name: Check updatelist.xml
 
+env:
+  GH_TOKEN: ${{ github.token }}
+
 on:
   push:
     branches:
