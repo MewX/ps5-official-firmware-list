@@ -1,6 +1,9 @@
 name: Check updatelist.xml
 
 on:
+  push:
+    branches:
+    - main
   schedule:
     - cron: '0 0 * * *' # Run every day at midnight UTC
 
