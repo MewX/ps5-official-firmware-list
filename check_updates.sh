@@ -43,6 +43,18 @@ if [[ -n "$quoted_strings" ]]; then
       # Download the file into the folder
       curl -s -L "$string" -o "$folder_name/PS5UPDATE.PUP"
       echo "Downloaded to: $folder_name/PS5UPDATE.PUP"
+
+      # Calculate SHA256 and MD5 checksums
+      sha256sum=$(sha256sum "$folder_name/PS5UPDATE.PUP" | awk '{print $1}')
+      md5sum=$(md5sum "$folder_name/PS5UPDATE.PUP" | awk '{print $1}')
+
+      # Show checksums in the output
+      echo "SHA256: $sha256sum"
+      echo "MD5   : $md5sum"
+
+      # Save checksums to files
+      echo "$sha256sum" > "$folder_name/PS5UPDATE.PUP.sha256"
+      echo "$md5sum" > "$folder_name/PS5UPDATE.PUP.md5"
     else
       echo "ERROR: Unable to parse URL: $string"
     fi
