@@ -3,7 +3,10 @@ The community-contributed PlayStation 5 official firmware list with checksums.
 
 File issues if you have any questions.
 
-**Note that no downloads will be offered by this repo by default. However, if you are working on PS5 security, then I'm happy to see what binaries I can offer. _Otherwise, please download the firmware from somewhere else, and then look up this table for the checksums._**
+> [!IMPORTANT]
+> No downloads will be offered by this repo by default.
+> **However, if you are working on PS5 security research, then I'm happy to see what binaries I can offer.**
+> Otherwise, please download the firmware from somewhere else, and then look up this table for the checksums.
 
 ## Update List files
 Format： `http://f<TLD>01.ps5.update.playstation.net/update/ps5/official/<OBFUSCATED_STRING>/list/<TLD>/updatelist.xml`.
