@@ -31,11 +31,16 @@ jobs:
         if: steps.git-check.outputs.has_changes == '1'
         id: check-pr
         run: |
-          pr_exists=$(gh pr list --head "auto-update" --base "main" --json files -q '. | length')
+          pr_exists=$(gh pr list --head "auto-updatelist" --base "main" --json files -q '. | length')
           if [[ $pr_exists -eq 0 ]]; then
             echo "::set-output name=pr_exists::false"
           else
-            echo "::set-output name=pr_exists::true"
+            gh pr list --head "auto-updatelist" --base "main" --json files -q '. | .files | select(.path == "updatelists/updatelist.latest.xml") | .path' > pr_files.txt
+            if [ -s pr_files.txt ]; then
+              echo "::set-output name=pr_exists::true"
+            else
+              echo "::set-output name=pr_exists::false"
+            fi
           fi
 
       - name: Create Pull Request
