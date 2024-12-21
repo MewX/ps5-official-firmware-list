@@ -46,7 +46,7 @@ jobs:
         if: steps.git-check.outputs.has_changes == '1' && steps.check-pr.outputs.pr_exists == 'false' 
         uses: peter-evans/create-pull-request@v4
         with:
-          token: ${{ secrets.PAT }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           commit-message: 'Automated updating updatelist.xml'
           title: 'Automated updating updatelist.xml'
           body: 'A newer updatelist.xml has been found.'
