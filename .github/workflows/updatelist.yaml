@@ -24,7 +24,7 @@ jobs:
       - name: Check for changes
         id: git-check
         run: |
-          git config core.autocrlf
+          git config --global core.autocrlf true
           git diff  --ignore-space-at-eol --exit-code || echo "::set-output name=has_changes::$?" # Ignore the exit code
 
       - name: Check for existing PR
