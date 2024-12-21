@@ -35,7 +35,7 @@ if [ "$all_hashes_found" = true ]; then
     exit 0
 fi
 
-# TODO: keep all versions of updatelists.xml
+# TODO: keep all history versions of updatelists.xml
 
 # If not all hashes are found, download the file
 echo "Not all hashes were found. Downloading the file..."
