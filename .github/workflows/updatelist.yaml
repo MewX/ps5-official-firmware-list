@@ -35,12 +35,7 @@ jobs:
           if [[ $pr_exists -eq 0 ]]; then
             echo "::set-output name=pr_exists::false"
           else
-            gh pr list --head "auto-updatelist" --base "main" --json files -q '.[0] | .files | select(.path == "updatelists/updatelist.latest.xml") | .path' > pr_files.txt
-            if [ -s pr_files.txt ]; then
-              echo "::set-output name=pr_exists::true"
-            else
-              echo "::set-output name=pr_exists::false"
-            fi
+            echo "::set-output name=pr_exists::true"
           fi
 
       - name: Create Pull Request
