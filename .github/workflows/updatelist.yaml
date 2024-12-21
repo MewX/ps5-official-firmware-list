@@ -30,6 +30,7 @@ jobs:
         if: steps.git-check.outputs.has_changes == '1'
         id: check-pr
         run: |
+          gh pr list --head "auto-update" --base "main" --json files -q '.'
           gh pr list --head "auto-update" --base "main" --json files -q '. | .files | select(.path == "updatelists/updatelist.latest.xml") | .path' > pr_files.txt
           if [ -s pr_files.txt ]; then
             echo "::set-output name=pr_exists::true"
