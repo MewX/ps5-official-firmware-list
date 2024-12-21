@@ -48,3 +48,4 @@ jobs:
           body: 'A newer updatelist.xml has been found.'
           branch: 'auto-updatelist'
           base: 'main'
+          delete-branch: true
