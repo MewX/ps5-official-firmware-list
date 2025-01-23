@@ -1,0 +1,26 @@
+<?xml version="1.0" ?>
+<update_data_list>
+	<region id="us">
+		<force_update>
+			<system auto_update_version="00.00" sdk_version="09.60.00.04-00.00.00.0.1" upd_version="09.60.00.00">
+				<conditional_requirement auto_update_version="00.00" id="PPSA13801" sdk_version="10.01.00.00-00.00.00.0.1" type="title" upd_version="10.01.00.00"/>
+				<conditional_requirement auto_update_version="00.00" id="PPSA13802" sdk_version="10.01.00.00-00.00.00.0.1" type="title" upd_version="10.01.00.00"/>
+				<conditional_requirement auto_update_version="00.00" id="PPSA13803" sdk_version="10.01.00.00-00.00.00.0.1" type="title" upd_version="10.01.00.00"/>
+				<conditional_requirement auto_update_version="00.00" id="PPSA13804" sdk_version="10.01.00.00-00.00.00.0.1" type="title" upd_version="10.01.00.00"/>
+				<conditional_requirement auto_update_version="00.00" id="PPSA08030" sdk_version="10.01.00.00-00.00.00.0.1" type="title" upd_version="10.01.00.00"/>
+				<conditional_requirement auto_update_version="00.00" id="PPSA10664" sdk_version="10.01.00.00-00.00.00.0.1" type="title" upd_version="10.01.00.00"/>
+				<conditional_requirement auto_update_version="00.00" id="PPSA10665" sdk_version="10.01.00.00-00.00.00.0.1" type="title" upd_version="10.01.00.00"/>
+				<conditional_requirement auto_update_version="00.00" id="PPSA10666" sdk_version="10.01.00.00-00.00.00.0.1" type="title" upd_version="10.01.00.00"/>
+			</system>
+		</force_update>
+		<system_pup auto_update_version="00.00" label="25.01-10.60.00.06-00.00.00.0.1" sdk_version="10.60.00.06-00.00.00.0.1" upd_version="10.60.00.00">
+			<update_data update_type="full">
+				<image size="1319686656">http://dus01.ps5.update.playstation.net/update/ps5/official/tJMRE80IbXnE9YuG0jzTXgKEjIMoabr6/image/2025_0116/sys_9a3d95a30af44b01b93649424da0f33999223571e5b5fb124b7f17e07bc70a28/PS5UPDATE.PUP?dest=us</image>
+			</update_data>
+		</system_pup>
+		<finished_test_list>
+			<finished_test auto_update_version="00.00" sdk_version="10.00.00.00-00.00.00.1.1" upd_version="10.00.00.00"/>
+			<finished_test auto_update_version="00.00" sdk_version="7.60.00.00-00.00.00.2.1" upd_version="7.60.00.00"/>
+		</finished_test_list>
+	</region>
+</update_data_list>
