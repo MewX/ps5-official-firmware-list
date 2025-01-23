@@ -50,6 +50,10 @@ if [[ -n "$quoted_strings" ]]; then
       curl -s -L "$string" -o "$folder_name/PS5UPDATE.PUP"
       echo "Downloaded to: $folder_name/PS5UPDATE.PUP"
 
+      # Calculate file size in bytes
+      filesize=$(stat -c %s "$folder_name/PS5UPDATE.PUP")
+      echo "File size: $filesize B"
+
       # Calculate SHA256 and MD5 checksums
       sha256sum=$(sha256sum "$folder_name/PS5UPDATE.PUP" | awk '{print $1}')
       md5sum=$(md5sum "$folder_name/PS5UPDATE.PUP" | awk '{print $1}')
@@ -57,6 +61,9 @@ if [[ -n "$quoted_strings" ]]; then
       # Show checksums in the output
       echo "SHA256: $sha256sum"
       echo "MD5   : $md5sum"
+
+      # For easier copy to README.md
+      echo "COPY: | $sha256sum | $md5sum | $filesize B |"
 
       # Save checksums to files
       echo "$sha256sum" > "$folder_name/PS5UPDATE.PUP.sha256"
