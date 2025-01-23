@@ -4,8 +4,8 @@ The community-contributed PlayStation 5 official firmware list with checksums.
 File issues if you have any questions.
 
 > [!IMPORTANT]
-> No downloads will be offered by this repo by default.
-> **However, if you are working on PS5 security research, then I'm happy to see what binaries I can offer.**
+> By default, no downloads will be offered by this repo.
+> **However, if you work on PS5 security research, then I'm happy to offer binaries that I have.**
 > Otherwise, please download the firmware from somewhere else, and then look up this table for the checksums.
 
 ## Update List files
