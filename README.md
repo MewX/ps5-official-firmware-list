@@ -21,6 +21,12 @@ http://fus01.ps5.update.playstation.net/update/ps5/official/tJMRE80IbXnE9YuG0jzT
 
 To download the latest firmware, go to: https://www.playstation.com/en-us/support/hardware/ps5/system-software/.
 
+### 11.x
+| Firmware Version (Long)        | Version (Short) | Type     | Build Date      | sha256                                                           | md5 checksum                     | size   |
+| ------------------------------ | --------------- | -------- | --------------- | ---------------------------------------------------------------- | -------------------------------- | ------ |
+| 25.02-11.00.00.43-00.00.00.0.1 | 11.00.00        | 🆙 Update   | 2025_0304       | eb42370180bdec9756b06bb577ca200906d257a7362cec410cf913fb3421b75c | 86c09142ff15d98ede6039c20305fbfe | 1346488832 B |
+| 25.02-11.00.00.43-00.00.00.0.1 | 11.00.00        | ❤️‍🩹 Recovery | 2025_0304       | 08c114e9aec14cea145adb6275544a7923b86c1681c7e9ecf03afb18d23bd58b | 74c23a78f541910644e5b2176b1e54d9 | 1503983104 B |
+
 ### 10.x
 | Firmware Version (Long)        | Version (Short) | Type     | Build Date      | sha256                                                           | md5 checksum                     | size   |
 | ------------------------------ | --------------- | -------- | --------------- | ---------------------------------------------------------------- | -------------------------------- | ------ |
