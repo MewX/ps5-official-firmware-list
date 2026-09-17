@@ -17,6 +17,37 @@ http://fjp01.ps5.update.playstation.net/update/ps5/official/tJMRE80IbXnE9YuG0jzT
 http://fus01.ps5.update.playstation.net/update/ps5/official/tJMRE80IbXnE9YuG0jzTXgKEjIMoabr6/list/us/updatelist.xml
 ```
 
+### What is `<OBFUSCATED_STRING>`?
+
+There is nothing to calculate: it is **not** derived from the firmware version. It is a fixed path segment
+of Sony's update service, and it is the same for every firmware version and every region. Every
+`updatelist.xml` archived under [`updatelists/`](updatelists/) uses the same value, and so does
+[`check_updatelist.sh`](check_updatelist.sh), which simply hardcodes it:
+
+```
+tJMRE80IbXnE9YuG0jzTXgKEjIMoabr6
+```
+
+### Anatomy of a `PS5UPDATE.PUP` URL
+
+The `<image>` element of `updatelist.xml` points at the firmware file itself:
+
+```
+http://dus01.ps5.update.playstation.net/update/ps5/official/<OBFUSCATED_STRING>/image/<BUILD_DATE>/sys_<SHA256>/PS5UPDATE.PUP?dest=us
+```
+
+| Part                  | Changes per firmware? | Where it comes from                                                                   |
+| --------------------- | --------------------- | ------------------------------------------------------------------------------------- |
+| `<OBFUSCATED_STRING>` | No                    | The constant above                                                                      |
+| `<BUILD_DATE>`        | Yes                   | The `YYYY_MMDD` build date, i.e. the "Build Date" column of the tables below             |
+| `sys_<SHA256>`        | Yes                   | The SHA-256 of `PS5UPDATE.PUP` itself, i.e. the "sha256" column below. Recovery images use `rec_<SHA256>` |
+
+Note the download host is `d...01` (download), while the update list host is `f...01`.
+
+Neither the build date nor the SHA-256 can be computed in advance: read them from `updatelist.xml`, from
+the [PS5 system software page](https://www.playstation.com/en-us/support/hardware/ps5/system-software/),
+or from the tables below.
+
 ## The Full List
 
 To download the latest firmware, go to: https://www.playstation.com/en-us/support/hardware/ps5/system-software/.
