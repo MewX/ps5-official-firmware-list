@@ -1,0 +1,6 @@
+== Cross checks: does the host or the /list/<cc>/ segment pick the content? ==
+host=fus01 list=us   http=200  sha=f62a556dc9f4  <region id="us"
+host=fus01 list=jp   http=200  sha=dcdf65c0f56d  <region id="jp"
+host=fjp01 list=us   http=200  sha=f62a556dc9f4  <region id="us"
+host=fjp01 list=jp   http=200  sha=dcdf65c0f56d  <region id="jp"
+host=fus01 list=gb   http=404  sha=e3ebaa16dd9d  -
