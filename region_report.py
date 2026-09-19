@@ -13,10 +13,17 @@ xml_dir = os.path.join(out, "xml")
 
 status = {}
 with open(os.path.join(out, "results.tsv")) as fh:
-    next(fh)
+    header = next(fh).rstrip("\n").split("\t")
     for line in fh:
-        cc, ip, http, byts, body = line.rstrip("\n").split("\t")
-        status[cc] = dict(ip=ip, http=http, bytes=int(byts), body=body)
+        row = dict(zip(header, line.rstrip("\n").split("\t")))
+        status[row["cc"]] = dict(
+            f_ip=row.get("f_host_ip", row.get("ip", "-")),
+            d_ip=row.get("d_host_ip", "-"),
+            http=row["http"],
+            bytes=int(row["bytes"]),
+            body=row["body_sha256_16"],
+            region_id=row.get("region_id", "-"),
+        )
 
 
 def fields(path):
@@ -76,13 +83,29 @@ for cc in sorted(status):
         broken[cc] = str(exc)
 
 served = sorted(parsed)
-print("== Reachability ==")
+print("== Update list availability (path segment /list/<cc>/, fixed host) ==")
 by_http = defaultdict(list)
-for cc, s in status.items():
-    by_http[s["http"] if s["ip"] != "-" else "DNS_FAIL"].append(cc)
+for cc, st in status.items():
+    by_http[st["http"]].append(cc)
 for code in sorted(by_http):
     ccs = sorted(by_http[code])
     print("%-10s %3d  %s" % (code, len(ccs), " ".join(ccs)))
+
+print("\n== Hostname existence (DNS) ==")
+for prefix, key in (("f", "f_ip"), ("d", "d_ip")):
+    resolving = sorted(cc for cc, st in status.items() if st[key] != "-")
+    ips = defaultdict(list)
+    for cc in resolving:
+        ips[status[cc][key]].append(cc)
+    print("%s<cc>01 resolves for %d codes: %s" % (prefix, len(resolving), " ".join(resolving)))
+    for ip, ccs in sorted(ips.items()):
+        print("    %-16s %3d  %s" % (ip, len(ccs), " ".join(sorted(ccs))))
+
+print("\n== Served region_id vs requested code ==")
+mismatch = sorted(cc for cc, st in status.items()
+                  if st["region_id"] not in ("-", cc))
+print("echoed back unchanged for every served code" if not mismatch
+      else "differs for: %s" % " ".join("%s->%s" % (cc, status[cc]["region_id"]) for cc in mismatch))
 if broken:
     print("\nnot XML: %s" % " ".join(sorted(broken)))
 

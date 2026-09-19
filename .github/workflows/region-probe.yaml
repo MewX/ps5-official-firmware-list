@@ -1,6 +1,6 @@
-# TEMPORARY workflow for the issue #8 investigation: probes every ISO 3166-1
-# alpha-2 region code for a PS5 update list from a runner with unrestricted
-# network access. Delete once the results have been collected.
+# TEMPORARY workflow for the issue #8 investigation: probes Sony's PS5 update
+# service from a runner with unrestricted network access.
+# Delete once the results have been collected.
 name: Region probe (temporary)
 
 on:
@@ -19,61 +19,88 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Phase 1 - probe every ISO 3166-1 alpha-2 region
-        env:
-          PAR: '8'
-          TIMEOUT: '15'
+      - name: Phase 1 - every code, path segment + host DNS
         run: bash region_probe.sh probe_out
 
       - name: Phase 1 - report
-        run: |
-          python3 region_report.py probe_out | tee probe_out/report.txt
+        run: python3 region_report.py probe_out | tee probe_out/report.txt
 
-      - name: Phase 2 - probe the image (download) hosts
-        run: |
-          echo "== Distinct image URLs and their reachability ==" > probe_out/image_hosts.txt
-          grep -ho 'http://[^<]*PS5UPDATE.PUP[^<]*' probe_out/xml/*.xml 2>/dev/null \
-            | sort -u > probe_out/image_urls.txt || true
-          while read -r url; do
-            host=$(echo "$url" | awk -F/ '{print $3}')
-            ip=$(getent ahostsv4 "$host" | awk 'NR==1{print $1}')
-            code=$(curl -sS -I --max-time 20 -o /dev/null -w '%{http_code}' "$url" </dev/null 2>/dev/null || echo ERR)
-            clen=$(curl -sS -I --max-time 20 "$url" </dev/null 2>/dev/null \
-              | tr -d '\r' | awk 'tolower($1)=="content-length:"{print $2}' | tail -1)
-            printf '%s\n  ip=%s HEAD=%s content-length=%s\n' \
-              "$url" "${ip:--}" "$code" "${clen:--}" >> probe_out/image_hosts.txt
-          done < probe_out/image_urls.txt
-          cat probe_out/image_hosts.txt
-
-      - name: Phase 3 - host vs path-segment cross checks
+      - name: Phase 2 - host vs path segment, and token sensitivity
+        shell: bash +e {0}
         run: |
           TOKEN=tJMRE80IbXnE9YuG0jzTXgKEjIMoabr6
+          get() { curl -sS --max-time 15 "$1" 2>/dev/null; }
+          code() { curl -sS --max-time 15 -o /dev/null -w '%{http_code}' "$1" 2>/dev/null || echo ERR; }
           {
-            echo "== Cross checks: does the host or the /list/<cc>/ segment pick the content? =="
-            for pair in "us us" "us jp" "jp us" "jp jp" "us gb" "gb gb" "us zz" "zz us" "us xx" "us US" "us u" "us usa"; do
-              set -- $pair
-              hostcc=$1; listcc=$2
-              url="http://f${hostcc}01.ps5.update.playstation.net/update/ps5/official/${TOKEN}/list/${listcc}/updatelist.xml"
-              body=$(curl -sS --max-time 15 "$url" 2>/dev/null)
-              code=$(curl -sS --max-time 15 -o /dev/null -w '%{http_code}' "$url" 2>/dev/null || echo ERR)
-              sum=$(printf '%s' "$body" | sha256sum | cut -c1-12)
-              regid=$(printf '%s' "$body" | grep -o '<region id="[^"]*"' | head -1)
-              printf 'host=f%-4s list=%-4s http=%-4s sha=%-13s %s\n' "${hostcc}01" "$listcc" "$code" "$sum" "${regid:--}"
+            echo "== Cross matrix: every resolving f*01 host x every serving /list/<cc>/ =="
+            hosts="au br cn jp ru sa uk us eu kr mx tw"
+            lists=$(awk -F'\t' 'NR>1 && $4==200 {print $1}' probe_out/results.tsv | tr '\n' ' ')
+            echo "serving list segments: $lists"
+            printf '%-8s' "host\\list"; for l in $lists; do printf '%-14s' "$l"; done; echo
+            for h in $hosts; do
+              printf 'f%-7s' "${h}01"
+              for l in $lists; do
+                u="http://f${h}01.ps5.update.playstation.net/update/ps5/official/${TOKEN}/list/${l}/updatelist.xml"
+                b=$(get "$u"); s=$(printf '%s' "$b" | sha256sum | cut -c1-8)
+                r=$(printf '%s' "$b" | grep -o '<region id="[^"]*"' | head -1 | sed 's/.*id="//;s/"//')
+                printf '%-14s' "${r:-x}/$s"
+              done
+              echo
             done
             echo
-            echo "== Token sensitivity (wrong/absent obfuscated string) =="
-            for t in "$TOKEN" "TJMRE80IbXnE9YuG0jzTXgKEjIMoabr6" "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" ""; do
-              url="http://fus01.ps5.update.playstation.net/update/ps5/official/${t}/list/us/updatelist.xml"
-              code=$(curl -sS --max-time 15 -o /dev/null -w '%{http_code}' "$url" 2>/dev/null || echo ERR)
-              printf 'token=%-34s http=%s\n' "${t:-(empty)}" "$code"
+            echo "== Token sensitivity =="
+            for t in "$TOKEN" "TJMRE80IbXnE9YuG0jzTXgKEjIMoabr6" "tJMRE80IbXnE9YuG0jzTXgKEjIMoabr" "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" "x" ""; do
+              u="http://fus01.ps5.update.playstation.net/update/ps5/official/${t}/list/us/updatelist.xml"
+              printf 'token=%-34s http=%s\n' "${t:-(empty)}" "$(code "$u")"
+            done
+            echo
+            echo "== ?dest= sensitivity on the PUP download (HEAD) =="
+            base="http://dus01.ps5.update.playstation.net/update/ps5/official/${TOKEN}/image/2026_0909/sys_1eb4b18451e0f064fc23b5bd4c95cae7f6489f9ad1148b5dfb0d66452a108ebc/PS5UPDATE.PUP"
+            for q in "?dest=us" "?dest=jp" "?dest=zz" "?dest=" ""; do
+              printf 'dest=%-12s http=%s\n' "${q:-(none)}" \
+                "$(curl -sS -I --max-time 20 -o /dev/null -w '%{http_code}' "${base}${q}" </dev/null 2>/dev/null || echo ERR)"
+            done
+            echo
+            echo "== Cross-host download: fetch the us PUP from every d*01 host (first 1 MiB sha256) =="
+            for h in au br cn jp ru sa uk us; do
+              u="http://d${h}01.ps5.update.playstation.net/update/ps5/official/${TOKEN}/image/2026_0909/sys_1eb4b18451e0f064fc23b5bd4c95cae7f6489f9ad1148b5dfb0d66452a108ebc/PS5UPDATE.PUP?dest=us"
+              s=$(curl -sS --max-time 60 -r 0-1048575 "$u" 2>/dev/null | sha256sum | cut -c1-16)
+              printf 'd%-6s first1MiB=%s\n' "${h}01" "$s"
+            done
+            echo
+            echo "== Other path shapes on a serving host =="
+            for p in "list/us/updatelist.xml" "list/us/" "list/us" "list/updatelist.xml" "list//updatelist.xml" "list/us/update-list.xml"; do
+              u="http://fus01.ps5.update.playstation.net/update/ps5/official/${TOKEN}/${p}"
+              printf '%-34s http=%s\n' "/$p" "$(code "$u")"
+            done
+            echo
+            echo "== Sibling consoles, same token =="
+            for c in ps4 ps3 ps5; do
+              for f in updatelist.xml update-list.xml; do
+                u="http://fus01.${c}.update.playstation.net/update/${c}/official/${TOKEN}/list/us/${f}"
+                printf '%-64s http=%s\n' "${u#http://}" "$(code "$u")"
+              done
             done
           } | tee probe_out/cross_checks.txt
 
-      - name: Collect deduplicated results
+      - name: Phase 3 - response headers from a serving region
+        shell: bash +e {0}
         run: |
+          TOKEN=tJMRE80IbXnE9YuG0jzTXgKEjIMoabr6
+          for cc in us jp uk cn; do
+            echo "---- f${cc}01 /list/${cc}/ ----"
+            curl -sS -I --max-time 15 \
+              "http://f${cc}01.ps5.update.playstation.net/update/ps5/official/${TOKEN}/list/${cc}/updatelist.xml" \
+              </dev/null 2>/dev/null | tr -d '\r'
+          done | tee probe_out/headers.txt
+
+      - name: Collect deduplicated results
+        shell: bash +e {0}
+        run: |
+          rm -rf region-probe-results
           mkdir -p region-probe-results/xml
           cp probe_out/results.tsv probe_out/report.txt probe_out/cross_checks.txt \
-             probe_out/image_hosts.txt region-probe-results/ 2>/dev/null || true
+             probe_out/headers.txt region-probe-results/ 2>/dev/null
           : > region-probe-results/groups.tsv
           for f in probe_out/xml/*.xml; do
             [ -e "$f" ] || continue
@@ -83,12 +110,8 @@ jobs:
             [ -e "region-probe-results/xml/$sum.xml" ] || cp "$f" "region-probe-results/xml/$sum.xml"
           done
           echo "Distinct bodies: $(ls region-probe-results/xml | wc -l)"
-          echo "== results.tsv =="; cat region-probe-results/results.tsv
-          echo "== distinct bodies =="
-          for f in region-probe-results/xml/*.xml; do
-            [ -e "$f" ] || continue
-            echo "---- $(basename "$f") ----"; cat "$f"
-          done
+          echo "== results.tsv (served only) =="
+          awk -F'\t' 'NR==1 || $4==200' region-probe-results/results.tsv
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
