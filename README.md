@@ -202,42 +202,6 @@ To download the latest firmware, go to: https://www.playstation.com/en-us/suppor
 | 20.01-01.14.00.01-00.00.00.0.0 | 01.14.00        | 🆙 Update   | 2020            | 0ed3151ed4e50eacc21977cc8677761d39ef0a8273eea907d6fec5bafb9fa95b | d3cf1f0c86c510b728b3307ddc5b57d1 | 767MB  |
 | 20.01-01.12.00.01-00.00.00.0.0 | 01.12.00        | 🆙 Update   | 2020            | f7707b4ecca0259a890ef2f4e167c8d62afcecb33eeef377f41335263c7afc04 | b81df1de5c73db261bc91f97e41dba3c | 767MB  |
 
-## Automation
-
-Three GitHub Actions workflows keep this list up to date. They run on
-GitHub-hosted runners, which are free for public repositories.
-
-| Workflow | Trigger | What it does |
-| -------- | ------- | ------------ |
-| [`updatelist.yaml`](.github/workflows/updatelist.yaml) | daily, and on push to `main` | Runs `check_updatelist.sh`. When Sony publishes a new `updatelist.xml`, it opens a pull request on the `auto-updatelist` branch adding the file under `updatelists/`. |
-| [`firmware-hashes.yaml`](.github/workflows/firmware-hashes.yaml) | when the workflow above finishes, and on demand | Runs `update_readme_hashes.sh`: downloads the update and recovery images, hashes them, and opens a second pull request on the `auto-readme-hashes` branch adding the rows to the table above. |
-| [`tests.yaml`](.github/workflows/tests.yaml) | every push and pull request | Runs `tests/run_all.sh` and ShellCheck. |
-
-The two pull requests are both opened against `main` and touch different
-files - one the `updatelists/` XML, the other `README.md` - so they can be
-reviewed and merged independently. If a checksum pull request is still open
-when the next release lands, the workflow waits rather than replacing it, and
-picks the new release up as soon as the open one is merged.
-
-`update_readme_hashes.sh` handles a major version bump by creating a new
-`### N.x` section ahead of the sections it supersedes. It verifies every
-download against the sha256 that Sony embeds in the download URL, and deletes
-each image as soon as it has been hashed, so a run never needs more than about
-1.5GB of disk even though it moves roughly 2.7GB.
-
-To run it yourself:
-
-```
-bash update_readme_hashes.sh
-```
-
-The tests make no network requests and download no firmware, so they are cheap
-to run anywhere:
-
-```
-bash tests/run_all.sh
-```
-
 ## Contribution Guide
 
 Please feel free to send a Pull Request and a firmware file that matches at least one of the checksum for verification.
