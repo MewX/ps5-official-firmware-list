@@ -1,0 +1,65 @@
+== Update list availability (path segment /list/<cc>/, fixed host) ==
+200          8  au br cn jp ru sa uk us
+404        284  276 392 826 840 JP US Us ac ad ae af ag ai al all am ao ap apac aq ar as asia at aus aw ax az ba bb bd be bf bg bh bi bj bl bm bn bo bq bra bs bt bv bw by bz ca can cc cd cf cg ch chn ci ck cl cm co cr cu cv cw cx cy cz de deu dj dk dm do dz ec ee eg eh emea en er es esp et eu fi fj fk fm fo fr fra ga gb gbr gd ge gf gg gh gi gl gm gn gp gq gr gs gt gu gw gy hk hm hn hr ht hu id ie il im in intl io iq ir is it ita je jm jo jpn ke kg kh ki km kn kor kp kr kw ky kz la latam lb lc li lk lr ls lt lu lv ly ma mc md me mex mf mg mh mk ml mm mn mo mp mq mr ms mt mu mv mw mx my mz na nc ne nf ng ni nl nld no np nr nu nz om pa pe pf pg ph pk pl pm pn pr ps pt pw py qa re ro rs rus rw sau sb sc sd se sg sh si sj sk sl sm sn so sr ss st su sv sx sy sz tc td tf tg th tj tk tl tm tn to tr tt tv tw twn tz u uS ua ug um usa usx uy uz va vc ve vg vi vn vu wf world ws x xx ye yt za zm zw zz
+
+== Hostname existence (DNS) ==
+f<cc>01 resolves for 16 codes: JP US Us au br cn eu jp kr mx ru sa tw uS uk us
+    23.200.172.219    16  JP US Us au br cn eu jp kr mx ru sa tw uS uk us
+d<cc>01 resolves for 16 codes: JP US Us au br cn eu jp kr mx ru sa tw uS uk us
+    2.18.67.30        11  US Us au br eu jp kr mx sa uS uk
+    23.15.3.203        4  JP cn tw us
+    23.53.11.76        1  ru
+
+== Served region_id vs requested code ==
+echoed back unchanged for every served code
+
+== Identical response bodies ==
+0badfda0bd66    1 regions  au
+6edb74edb15d    1 regions  br
+4017f4c4c011    1 regions  cn
+1f151aea9499    1 regions  jp
+a95f6e398141    1 regions  ru
+11f5cef02a3b    1 regions  sa
+5f59d6b3fcce    1 regions  uk
+00dde434c872    1 regions  us
+
+== Field differences across 8 served regions ==
+  [DIFF] region_id                        8 distinct values
+         au                                                                       1  au
+         br                                                                       1  br
+         cn                                                                       1  cn
+         jp                                                                       1  jp
+         ru                                                                       1  ru
+         sa                                                                       1  sa
+         uk                                                                       1  uk
+         us                                                                       1  us
+  [same] force_update.upd_version         13.60.00.00
+  [same] force_update.sdk_version         13.60.00.07-00.00.00.0.1
+  [same] force_update.requirement_count   12
+  [same] force_update.requirements        PPSA08030:10.01.00.00,PPSA10664:10.01.00.00,PPSA10665:10.01.00.00,PPSA10666:10.01.00.00...
+  [same] system_pup.label                 26.06-14.00.00.39-00.00.00.0.1
+  [same] system_pup.upd_version           14.00.00.00
+  [same] system_pup.sdk_version           14.00.00.39-00.00.00.0.1
+  [same] image[full].size                 1260600832
+  [DIFF] image[full].host                 8 distinct values
+         dau01.ps5.update.playstation.net                                         1  au
+         dbr01.ps5.update.playstation.net                                         1  br
+         dcn01.ps5.update.playstation.net                                         1  cn
+         djp01.ps5.update.playstation.net                                         1  jp
+         dru01.ps5.update.playstation.net                                         1  ru
+         dsa01.ps5.update.playstation.net                                         1  sa
+         duk01.ps5.update.playstation.net                                         1  uk
+         dus01.ps5.update.playstation.net                                         1  us
+  [same] image[full].token                tJMRE80IbXnE9YuG0jzTXgKEjIMoabr6
+  [same] image[full].build_date           2026_0909
+  [same] image[full].file_hash            sys_1eb4b18451e0f064fc23b5bd4c95cae7f6489f9ad1148b5dfb0d66452a108ebc
+  [DIFF] image[full].dest                 8 distinct values
+         au                                                                       1  au
+         br                                                                       1  br
+         cn                                                                       1  cn
+         jp                                                                       1  jp
+         ru                                                                       1  ru
+         sa                                                                       1  sa
+         uk                                                                       1  uk
+         us                                                                       1  us
+  [same] finished_tests                   14.00.00.00/14.00.00.00-00.00.00.1.1,14.00.00.00/14.00.00.00-00.00.00.2.1

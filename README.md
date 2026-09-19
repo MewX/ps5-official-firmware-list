@@ -9,13 +9,27 @@ File issues if you have any questions.
 > Otherwise, please download the firmware from somewhere else, and then look up this table for the checksums.
 
 ## Update List files
-Format： `http://f<TLD>01.ps5.update.playstation.net/update/ps5/official/<OBFUSCATED_STRING>/list/<TLD>/updatelist.xml`.
+
+Format: `http://f<REGION>01.ps5.update.playstation.net/update/ps5/official/<OBFUSCATED_STRING>/list/<REGION>/updatelist.xml`.
 
 Examples:
 ```
 http://fjp01.ps5.update.playstation.net/update/ps5/official/tJMRE80IbXnE9YuG0jzTXgKEjIMoabr6/list/jp/updatelist.xml
 http://fus01.ps5.update.playstation.net/update/ps5/official/tJMRE80IbXnE9YuG0jzTXgKEjIMoabr6/list/us/updatelist.xml
 ```
+
+`<OBFUSCATED_STRING>` is not derived from the firmware version and cannot be calculated: it is the
+constant `tJMRE80IbXnE9YuG0jzTXgKEjIMoabr6` for every version and every region.
+
+`<REGION>` is one of 8 values only — `au`, `br`, `cn`, `jp`, `ru`, `sa`, `uk`, `us` — and all 8 lists
+advertise the identical firmware, so the region does not change what you download.
+
+In the `PS5UPDATE.PUP` download URL that `updatelist.xml` points at, the `sys_<SHA256>` path segment is
+the SHA-256 of the file itself, i.e. the "sha256" column of the tables below (recovery images use
+`rec_<SHA256>`), and `<BUILD_DATE>` is the "Build Date" column.
+
+See [investigations/update-url-regions/](investigations/update-url-regions/) for the full URL anatomy,
+the region list and the measurements behind them.
 
 ## The Full List
 
