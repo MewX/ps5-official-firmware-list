@@ -43,7 +43,8 @@ file_path="$folder_name/$file_name"
 wget -q "$ps5_updatelist_url" -O "$file_path"
 echo "File downloaded as $file_path"
 echo ""
-echo "Please run check_and_download_updates.sh to download all the binaries."
+echo "Please run update_readme_hashes.sh to download the images and fill in the"
+echo "README.md rows, or check_and_download_updates.sh to only fetch the binaries."
 echo ""
 
 # Extract necessary information and build markdown table row.
@@ -75,4 +76,6 @@ copied_file_path="$folder_name/updatelist.$build_date.$upd_version.xml"
 echo "File copied to as $copied_file_path"
 cp -f "$file_path" "$copied_file_path"
 
-# TODO: Update the README.md as well.
+# The README.md rows are filled in by update_readme_hashes.sh, which the
+# "Update firmware hashes" workflow runs after this one: the checksums need
+# the actual firmware images, which are too large to download from here.

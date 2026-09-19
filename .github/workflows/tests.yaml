@@ -1,0 +1,38 @@
+name: Tests
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # The suite is pure text processing against local fixtures: no network
+      # access and no firmware downloads, so it costs seconds rather than the
+      # gigabytes the real job moves.
+      - name: Run the test suite
+        run: bash tests/run_all.sh
+
+      - name: ShellCheck
+        run: |
+          if ! command -v shellcheck > /dev/null; then
+            sudo apt-get update && sudo apt-get install -y shellcheck
+          fi
+          shellcheck --external-sources \
+            update_readme_hashes.sh \
+            lib/ps5fw.sh \
+            tests/run_all.sh \
+            tests/lib/assert.sh \
+            tests/test_*.sh
