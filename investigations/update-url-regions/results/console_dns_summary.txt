@@ -1,0 +1,7 @@
+== Region hostnames per console (DNS) ==
+ps3 f<CC>01   16  JP US Us au br cn eu jp kr mx ru sa tw uS uk us 
+ps3 d<CC>01   16  JP US Us au br cn eu jp kr mx ru sa tw uS uk us 
+ps4 f<CC>01   16  JP US Us au br cn eu jp kr mx ru sa tw uS uk us 
+ps4 d<CC>01   16  JP US Us au br cn eu jp kr mx ru sa tw uS uk us 
+ps5 f<CC>01   16  JP US Us au br cn eu jp kr mx ru sa tw uS uk us 
+ps5 d<CC>01   16  JP US Us au br cn eu jp kr mx ru sa tw uS uk us 
