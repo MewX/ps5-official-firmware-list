@@ -79,6 +79,27 @@ endpoint. Every one of the twelve serves all 8 regions' lists:
 segment selects the content. See the 12 × 8 matrix in
 [`results/cross_checks.txt`](results/cross_checks.txt).
 
+## The 12 hostnames predate the PS5
+
+Since the 8 serving regions are a subset of the 12 that resolve, an obvious guess is that `eu`, `kr`,
+`mx` and `tw` are leftovers from a broader region set that the PS5 consolidated. That guess is wrong.
+
+Resolving `f<CC>01` and `d<CC>01` under `ps3.update.playstation.net`, `ps4.update.playstation.net` and
+`ps5.update.playstation.net` for all 292 codes returns the **same 12 names for every console**, with no
+console having one the others lack:
+
+```
+au br cn eu jp kr mx ru sa tw uk us
+```
+
+Each console has its own Akamai addresses behind those names, but the region naming itself is unchanged
+across three hardware generations. So these codes are a long-standing Sony convention, not a PS5 release
+map — the PS5 inherited the same 12 names the PS3 already used.
+
+What this does *not* settle is whether the PS3 and PS4 serve lists for `eu`, `kr`, `mx` and `tw` where the
+PS5 does not: fetching another console's update list needs that console's own obfuscated path segment, and
+only the PS5's is known here. So the 8-of-12 split may be PS5-specific or may be shared; DNS cannot tell.
+
 ## The 8 lists are the same firmware
 
 All 8 responses are 2825 bytes with the same `Last-Modified`
@@ -112,10 +133,18 @@ codes — all 249 officially assigned ISO 3166-1 alpha-2 codes plus alpha-3,
 numeric, uppercase, grouping and invalid-control codes — sending every request to
 one fixed host, and separately records whether `f<CC>01` and `d<CC>01` resolve.
 [`region_report.py`](region_report.py) groups the responses and prints every
-field that differs.
+field that differs. The code lists live in
+[`codes-iso3166.txt`](codes-iso3166.txt) and [`codes-extra.txt`](codes-extra.txt).
 
 ```
 bash region_probe.sh out && python3 region_report.py out
+```
+
+[`console_dns_probe.sh`](console_dns_probe.sh) resolves the same codes against the
+PS3, PS4 and PS5 update services, for the cross-console comparison above.
+
+```
+bash console_dns_probe.sh out
 ```
 
 Host reachability and path availability are deliberately probed separately:
@@ -136,4 +165,6 @@ Caveats:
 | [`results/report.txt`](results/report.txt)           | Generated summary: availability, DNS grouping, field-by-field differences |
 | [`results/cross_checks.txt`](results/cross_checks.txt) | Host × region matrix, token and `?dest=` sensitivity, path shapes, PS4/PS3 |
 | [`results/headers.txt`](results/headers.txt)         | Response headers from four serving regions |
+| [`results/console_dns.tsv`](results/console_dns.tsv) | `f*01`/`d*01` DNS for every code under ps3, ps4 and ps5 |
+| [`results/console_dns_summary.txt`](results/console_dns_summary.txt) | Which region hostnames each console has |
 | `results/<region>.xml`                               | The update list each of the 8 regions served |
