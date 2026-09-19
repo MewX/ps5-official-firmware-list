@@ -1,0 +1,107 @@
+# TEMPORARY workflow for the issue #8 investigation: probes every ISO 3166-1
+# alpha-2 region code for a PS5 update list from a runner with unrestricted
+# network access. Delete once the results have been collected.
+name: Region probe (temporary)
+
+on:
+  push:
+    branches:
+      - claude/issue-8-investigation-mtb005
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Phase 1 - probe every ISO 3166-1 alpha-2 region
+        env:
+          PAR: '8'
+          TIMEOUT: '15'
+        run: bash region_probe.sh probe_out
+
+      - name: Phase 1 - report
+        run: |
+          python3 region_report.py probe_out | tee probe_out/report.txt
+
+      - name: Phase 2 - probe the image (download) hosts
+        run: |
+          echo "== Distinct image URLs and their reachability ==" > probe_out/image_hosts.txt
+          grep -ho 'http://[^<]*PS5UPDATE.PUP[^<]*' probe_out/xml/*.xml 2>/dev/null \
+            | sort -u > probe_out/image_urls.txt || true
+          while read -r url; do
+            host=$(echo "$url" | awk -F/ '{print $3}')
+            ip=$(getent ahostsv4 "$host" | awk 'NR==1{print $1}')
+            code=$(curl -sS -I --max-time 20 -o /dev/null -w '%{http_code}' "$url" </dev/null 2>/dev/null || echo ERR)
+            clen=$(curl -sS -I --max-time 20 "$url" </dev/null 2>/dev/null \
+              | tr -d '\r' | awk 'tolower($1)=="content-length:"{print $2}' | tail -1)
+            printf '%s\n  ip=%s HEAD=%s content-length=%s\n' \
+              "$url" "${ip:--}" "$code" "${clen:--}" >> probe_out/image_hosts.txt
+          done < probe_out/image_urls.txt
+          cat probe_out/image_hosts.txt
+
+      - name: Phase 3 - host vs path-segment cross checks
+        run: |
+          TOKEN=tJMRE80IbXnE9YuG0jzTXgKEjIMoabr6
+          {
+            echo "== Cross checks: does the host or the /list/<cc>/ segment pick the content? =="
+            for pair in "us us" "us jp" "jp us" "jp jp" "us gb" "gb gb" "us zz" "zz us" "us xx" "us US" "us u" "us usa"; do
+              set -- $pair
+              hostcc=$1; listcc=$2
+              url="http://f${hostcc}01.ps5.update.playstation.net/update/ps5/official/${TOKEN}/list/${listcc}/updatelist.xml"
+              body=$(curl -sS --max-time 15 "$url" 2>/dev/null)
+              code=$(curl -sS --max-time 15 -o /dev/null -w '%{http_code}' "$url" 2>/dev/null || echo ERR)
+              sum=$(printf '%s' "$body" | sha256sum | cut -c1-12)
+              regid=$(printf '%s' "$body" | grep -o '<region id="[^"]*"' | head -1)
+              printf 'host=f%-4s list=%-4s http=%-4s sha=%-13s %s\n' "${hostcc}01" "$listcc" "$code" "$sum" "${regid:--}"
+            done
+            echo
+            echo "== Token sensitivity (wrong/absent obfuscated string) =="
+            for t in "$TOKEN" "TJMRE80IbXnE9YuG0jzTXgKEjIMoabr6" "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" ""; do
+              url="http://fus01.ps5.update.playstation.net/update/ps5/official/${t}/list/us/updatelist.xml"
+              code=$(curl -sS --max-time 15 -o /dev/null -w '%{http_code}' "$url" 2>/dev/null || echo ERR)
+              printf 'token=%-34s http=%s\n' "${t:-(empty)}" "$code"
+            done
+          } | tee probe_out/cross_checks.txt
+
+      - name: Collect deduplicated results
+        run: |
+          mkdir -p region-probe-results/xml
+          cp probe_out/results.tsv probe_out/report.txt probe_out/cross_checks.txt \
+             probe_out/image_hosts.txt region-probe-results/ 2>/dev/null || true
+          : > region-probe-results/groups.tsv
+          for f in probe_out/xml/*.xml; do
+            [ -e "$f" ] || continue
+            cc=$(basename "$f" .xml)
+            sum=$(sha256sum "$f" | cut -c1-12)
+            printf '%s\t%s\n' "$cc" "$sum" >> region-probe-results/groups.tsv
+            [ -e "region-probe-results/xml/$sum.xml" ] || cp "$f" "region-probe-results/xml/$sum.xml"
+          done
+          echo "Distinct bodies: $(ls region-probe-results/xml | wc -l)"
+          echo "== results.tsv =="; cat region-probe-results/results.tsv
+          echo "== distinct bodies =="
+          for f in region-probe-results/xml/*.xml; do
+            [ -e "$f" ] || continue
+            echo "---- $(basename "$f") ----"; cat "$f"
+          done
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: region-probe-results
+          path: region-probe-results/
+
+      - name: Commit results back to the branch
+        continue-on-error: true
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -f region-probe-results
+          git commit -m "Region probe results (temporary, issue #8 investigation)" || exit 0
+          git pull --rebase origin "${GITHUB_REF_NAME}" || true
+          git push origin "HEAD:${GITHUB_REF_NAME}"
