@@ -1,6 +1,56 @@
-== Cross checks: does the host or the /list/<cc>/ segment pick the content? ==
-host=fus01 list=us   http=200  sha=f62a556dc9f4  <region id="us"
-host=fus01 list=jp   http=200  sha=dcdf65c0f56d  <region id="jp"
-host=fjp01 list=us   http=200  sha=f62a556dc9f4  <region id="us"
-host=fjp01 list=jp   http=200  sha=dcdf65c0f56d  <region id="jp"
-host=fus01 list=gb   http=404  sha=e3ebaa16dd9d  -
+== Cross matrix: every resolving f*01 host x every serving /list/<cc>/ ==
+serving list segments: au br cn jp ru sa uk us 
+host\listau            br            cn            jp            ru            sa            uk            us            
+fau01   au/3e7bf4d3   br/27bc9d59   cn/7a5b00af   jp/dcdf65c0   ru/7d11daf1   sa/20af6174   uk/a6b57904   us/f62a556d   
+fbr01   au/3e7bf4d3   br/27bc9d59   cn/7a5b00af   jp/dcdf65c0   ru/7d11daf1   sa/20af6174   uk/a6b57904   us/f62a556d   
+fcn01   au/3e7bf4d3   br/27bc9d59   cn/7a5b00af   jp/dcdf65c0   ru/7d11daf1   sa/20af6174   uk/a6b57904   us/f62a556d   
+fjp01   au/3e7bf4d3   br/27bc9d59   cn/7a5b00af   jp/dcdf65c0   ru/7d11daf1   sa/20af6174   uk/a6b57904   us/f62a556d   
+fru01   au/3e7bf4d3   br/27bc9d59   cn/7a5b00af   jp/dcdf65c0   ru/7d11daf1   sa/20af6174   uk/a6b57904   us/f62a556d   
+fsa01   au/3e7bf4d3   br/27bc9d59   cn/7a5b00af   jp/dcdf65c0   ru/7d11daf1   sa/20af6174   uk/a6b57904   us/f62a556d   
+fuk01   au/3e7bf4d3   br/27bc9d59   cn/7a5b00af   jp/dcdf65c0   ru/7d11daf1   sa/20af6174   uk/a6b57904   us/f62a556d   
+fus01   au/3e7bf4d3   br/27bc9d59   cn/7a5b00af   jp/dcdf65c0   ru/7d11daf1   sa/20af6174   uk/a6b57904   us/f62a556d   
+feu01   au/3e7bf4d3   br/27bc9d59   cn/7a5b00af   jp/dcdf65c0   ru/7d11daf1   sa/20af6174   uk/a6b57904   us/f62a556d   
+fkr01   au/3e7bf4d3   br/27bc9d59   cn/7a5b00af   jp/dcdf65c0   ru/7d11daf1   sa/20af6174   uk/a6b57904   us/f62a556d   
+fmx01   au/3e7bf4d3   br/27bc9d59   cn/7a5b00af   jp/dcdf65c0   ru/7d11daf1   sa/20af6174   uk/a6b57904   us/f62a556d   
+ftw01   au/3e7bf4d3   br/27bc9d59   cn/7a5b00af   jp/dcdf65c0   ru/7d11daf1   sa/20af6174   uk/a6b57904   us/f62a556d   
+
+== Token sensitivity ==
+token=tJMRE80IbXnE9YuG0jzTXgKEjIMoabr6   http=200
+token=TJMRE80IbXnE9YuG0jzTXgKEjIMoabr6   http=404
+token=tJMRE80IbXnE9YuG0jzTXgKEjIMoabr    http=404
+token=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa   http=404
+token=x                                  http=404
+token=(empty)                            http=404
+
+== ?dest= sensitivity on the PUP download (HEAD) ==
+dest=?dest=us     http=200
+dest=?dest=jp     http=200
+dest=?dest=zz     http=200
+dest=?dest=       http=200
+dest=(none)       http=200
+
+== Cross-host download: fetch the us PUP from every d*01 host (first 1 MiB sha256) ==
+dau01   first1MiB=bd8bb96c36585125
+dbr01   first1MiB=bd8bb96c36585125
+dcn01   first1MiB=bd8bb96c36585125
+djp01   first1MiB=bd8bb96c36585125
+dru01   first1MiB=bd8bb96c36585125
+dsa01   first1MiB=bd8bb96c36585125
+duk01   first1MiB=bd8bb96c36585125
+dus01   first1MiB=bd8bb96c36585125
+
+== Other path shapes on a serving host ==
+/list/us/updatelist.xml            http=200
+/list/us/                          http=404
+/list/us                           http=404
+/list/updatelist.xml               http=404
+/list//updatelist.xml              http=404
+/list/us/update-list.xml           http=404
+
+== Sibling consoles, same token ==
+fus01.ps4.update.playstation.net/update/ps4/official/tJMRE80IbXnE9YuG0jzTXgKEjIMoabr6/list/us/updatelist.xml http=404
+fus01.ps4.update.playstation.net/update/ps4/official/tJMRE80IbXnE9YuG0jzTXgKEjIMoabr6/list/us/update-list.xml http=404
+fus01.ps3.update.playstation.net/update/ps3/official/tJMRE80IbXnE9YuG0jzTXgKEjIMoabr6/list/us/updatelist.xml http=404
+fus01.ps3.update.playstation.net/update/ps3/official/tJMRE80IbXnE9YuG0jzTXgKEjIMoabr6/list/us/update-list.xml http=404
+fus01.ps5.update.playstation.net/update/ps5/official/tJMRE80IbXnE9YuG0jzTXgKEjIMoabr6/list/us/updatelist.xml http=200
+fus01.ps5.update.playstation.net/update/ps5/official/tJMRE80IbXnE9YuG0jzTXgKEjIMoabr6/list/us/update-list.xml http=404

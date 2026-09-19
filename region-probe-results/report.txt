@@ -1,9 +1,17 @@
-== Reachability ==
+== Update list availability (path segment /list/<cc>/, fixed host) ==
 200          8  au br cn jp ru sa uk us
-404          4  eu kr mx tw
-DNS_FAIL   243  ac ad ae af ag ai al am ao aq ar as at aw ax az ba bb bd be bf bg bh bi bj bl bm bn bo bq bs bt bv bw by bz ca cc cd cf cg ch ci ck cl cm co cr cu cv cw cx cy cz de dj dk dm do dz ec ee eg eh en er es et fi fj fk fm fo fr ga gb gd ge gf gg gh gi gl gm gn gp gq gr gs gt gu gw gy hk hm hn hr ht hu id ie il im in io iq ir is it je jm jo ke kg kh ki km kn kp kw ky kz la lb lc li lk lr ls lt lu lv ly ma mc md me mf mg mh mk ml mm mn mo mp mq mr ms mt mu mv mw my mz na nc ne nf ng ni nl no np nr nu nz om pa pe pf pg ph pk pl pm pn pr ps pt pw py qa re ro rs rw sb sc sd se sg sh si sj sk sl sm sn so sr ss st su sv sx sy sz tc td tf tg th tj tk tl tm tn to tr tt tv tz ua ug um uy uz va vc ve vg vi vn vu wf ws ye yt za zm zw zz
+404        284  276 392 826 840 JP US Us ac ad ae af ag ai al all am ao ap apac aq ar as asia at aus aw ax az ba bb bd be bf bg bh bi bj bl bm bn bo bq bra bs bt bv bw by bz ca can cc cd cf cg ch chn ci ck cl cm co cr cu cv cw cx cy cz de deu dj dk dm do dz ec ee eg eh emea en er es esp et eu fi fj fk fm fo fr fra ga gb gbr gd ge gf gg gh gi gl gm gn gp gq gr gs gt gu gw gy hk hm hn hr ht hu id ie il im in intl io iq ir is it ita je jm jo jpn ke kg kh ki km kn kor kp kr kw ky kz la latam lb lc li lk lr ls lt lu lv ly ma mc md me mex mf mg mh mk ml mm mn mo mp mq mr ms mt mu mv mw mx my mz na nc ne nf ng ni nl nld no np nr nu nz om pa pe pf pg ph pk pl pm pn pr ps pt pw py qa re ro rs rus rw sau sb sc sd se sg sh si sj sk sl sm sn so sr ss st su sv sx sy sz tc td tf tg th tj tk tl tm tn to tr tt tv tw twn tz u uS ua ug um usa usx uy uz va vc ve vg vi vn vu wf world ws x xx ye yt za zm zw zz
 
-not XML: eu kr mx tw
+== Hostname existence (DNS) ==
+f<cc>01 resolves for 16 codes: JP US Us au br cn eu jp kr mx ru sa tw uS uk us
+    23.200.172.219    16  JP US Us au br cn eu jp kr mx ru sa tw uS uk us
+d<cc>01 resolves for 16 codes: JP US Us au br cn eu jp kr mx ru sa tw uS uk us
+    2.18.67.30        11  US Us au br eu jp kr mx sa uS uk
+    23.15.3.203        4  JP cn tw us
+    23.53.11.76        1  ru
+
+== Served region_id vs requested code ==
+echoed back unchanged for every served code
 
 == Identical response bodies ==
 0badfda0bd66    1 regions  au

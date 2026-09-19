@@ -1,0 +1,52 @@
+---- fus01 /list/us/ ----
+HTTP/1.1 200 OK
+Accept-Ranges: bytes
+Content-Type: application/xml
+ETag: "f22ea570be243ed42c8aba1f7423459b:1789433091.725799"
+Last-Modified: Tue, 15 Sep 2026 00:44:51 GMT
+Server: AkamaiNetStorage
+Content-Length: 2825
+Date: Sat, 19 Sep 2026 14:04:39 GMT
+Connection: keep-alive
+Set-Cookie: akacd_ps5_update_official=2147483647~rv=40~id=9fe0c94eadaf086b5cc1beb15834e4cb; path=/; Expires=Tue, 19 Jan 2038 03:14:07 GMT
+Cache-Control: max-age=3600
+
+---- fjp01 /list/jp/ ----
+HTTP/1.1 200 OK
+Accept-Ranges: bytes
+Content-Type: application/xml
+ETag: "64a6302a29cd88a574ebb718746b015a:1789433091.864932"
+Last-Modified: Tue, 15 Sep 2026 00:44:51 GMT
+Server: AkamaiNetStorage
+Content-Length: 2825
+Date: Sat, 19 Sep 2026 14:04:39 GMT
+Connection: keep-alive
+Set-Cookie: akacd_ps5_update_official=2147483647~rv=96~id=d607497aeeb4db524ab7e298da0a356c; path=/; Expires=Tue, 19 Jan 2038 03:14:07 GMT
+Cache-Control: max-age=3600
+
+---- fuk01 /list/uk/ ----
+HTTP/1.1 200 OK
+Accept-Ranges: bytes
+Content-Type: application/xml
+ETag: "0cce769d23ac685f1b7aa1912ae8ce8c:1789433091.638672"
+Last-Modified: Tue, 15 Sep 2026 00:44:51 GMT
+Server: AkamaiNetStorage
+Content-Length: 2825
+Date: Sat, 19 Sep 2026 14:04:39 GMT
+Connection: keep-alive
+Set-Cookie: akacd_ps5_update_official=2147483647~rv=8~id=6007bb959aefe6506cab164e1fa8599d; path=/; Expires=Tue, 19 Jan 2038 03:14:07 GMT
+Cache-Control: max-age=3600
+
+---- fcn01 /list/cn/ ----
+HTTP/1.1 200 OK
+Accept-Ranges: bytes
+Content-Type: application/xml
+ETag: "73804606301b404426857383249af997:1789433091.919541"
+Last-Modified: Tue, 15 Sep 2026 00:44:51 GMT
+Server: AkamaiNetStorage
+Content-Length: 2825
+Date: Sat, 19 Sep 2026 14:04:39 GMT
+Connection: keep-alive
+Set-Cookie: akacd_ps5_update_official=2147483647~rv=9~id=a5522280b1b289b1298a6e07429cbef2; path=/; Expires=Tue, 19 Jan 2038 03:14:07 GMT
+Cache-Control: max-age=3600
+
