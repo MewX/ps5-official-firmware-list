@@ -56,7 +56,16 @@ jobs:
       - name: Check for an open checksum pull request
         id: existing
         run: |
-          open=$(gh pr list --head "auto-readme-hashes" --base "main" --state open --json number --jq 'length' || echo 0)
+          # No fallback on purpose. If this query fails we cannot tell whether
+          # a pull request is pending, and defaulting to "none" would let the
+          # steps below replace one - the very thing this check exists to
+          # prevent. Fail the job instead, which both stops the run and makes
+          # a broken query visible rather than silently skipping forever.
+          open=$(gh pr list --head "auto-readme-hashes" --base "main" --state open --json number --jq 'length')
+          if [[ ! "$open" =~ ^[0-9]+$ ]]; then
+            echo "Could not determine whether a checksum pull request is open (got: '$open')" >&2
+            exit 1
+          fi
           echo "open=$open" >> "$GITHUB_OUTPUT"
           if [[ "$open" != "0" ]]; then
             echo "A checksum pull request is already open, so this run is skipping." \
@@ -87,6 +96,8 @@ jobs:
       - name: Link the updatelist.xml pull request, if one is open
         if: steps.hashes.outputs.changed == 'true'
         run: |
+          # This one may fail open: the worst case is a pull request body
+          # without a cross-reference, not a lost pull request.
           pr_number=$(gh pr list --head "auto-updatelist" --base "main" --state open --json number --jq '.[0].number // empty' || echo "")
           if [[ -n "$pr_number" ]]; then
             {
