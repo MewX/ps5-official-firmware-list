@@ -1,0 +1,119 @@
+name: Update firmware hashes
+
+env:
+  GH_TOKEN: ${{ github.token }}
+
+on:
+  # "Check updatelist.xml" opens its pull request with GITHUB_TOKEN, and a
+  # pull request opened that way deliberately does not raise a pull_request
+  # event - otherwise workflows could trigger each other forever. So chain off
+  # the completion of that workflow run instead, which is the supported way to
+  # react to work another workflow did.
+  #
+  # Note that GitHub only honours workflow_run for the copy of this file on
+  # the default branch, so this does nothing until it is merged.
+  workflow_run:
+    workflows: ["Check updatelist.xml"]
+    types:
+      - completed
+
+  # Also runnable by hand, for a release that was added manually or for a run
+  # that needs retrying.
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+# Two runs streaming the same 2.7GB of firmware at once would be pointless.
+concurrency:
+  group: firmware-hashes
+  cancel-in-progress: false
+
+jobs:
+  firmware-hashes:
+    # Nothing to hash if the updatelist check itself failed.
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      github.event.workflow_run.conclusion == 'success'
+
+    runs-on: ubuntu-latest
+    # The two images are ~1.2GB and ~1.4GB. Streaming them from Sony's CDN
+    # takes a few minutes, but leave room for a slow day.
+    timeout-minutes: 90
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      # An open pull request means the previous release's rows are not on main
+      # yet. Branching from main again would drop them, so wait instead - and
+      # find that out before downloading 2.7GB rather than after. Merging that
+      # pull request pushes to main, which runs "Check updatelist.xml" again
+      # and brings us straight back here.
+      - name: Check for an open checksum pull request
+        id: existing
+        run: |
+          # No fallback on purpose. If this query fails we cannot tell whether
+          # a pull request is pending, and defaulting to "none" would let the
+          # steps below replace one - the very thing this check exists to
+          # prevent. Fail the job instead, which both stops the run and makes
+          # a broken query visible rather than silently skipping forever.
+          open=$(gh pr list --head "auto-readme-hashes" --base "main" --state open --json number --jq 'length')
+          if [[ ! "$open" =~ ^[0-9]+$ ]]; then
+            echo "Could not determine whether a checksum pull request is open (got: '$open')" >&2
+            exit 1
+          fi
+          echo "open=$open" >> "$GITHUB_OUTPUT"
+          if [[ "$open" != "0" ]]; then
+            echo "A checksum pull request is already open, so this run is skipping." \
+              >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      # update_readme_hashes.py exits without touching anything when the README
+      # already has the checksums, so this is a cheap no-op on the runs where
+      # "Check updatelist.xml" found nothing new. Both images are streamed and
+      # hashed as they arrive, so neither is ever written to the runner's disk.
+      - name: Hash the firmware and write the checksums into README.md
+        id: hashes
+        if: steps.existing.outputs.open == '0'
+        env:
+          PS5FW_SUMMARY_FILE: ${{ runner.temp }}/pr-body.md
+        run: python3 update_readme_hashes.py
+
+      - name: Link the updatelist.xml pull request, if one is open
+        if: steps.hashes.outputs.changed == 'true'
+        run: |
+          # This one may fail open: the worst case is a pull request body
+          # without a cross-reference, not a lost pull request.
+          pr_number=$(gh pr list --head "auto-updatelist" --base "main" --state open --json number --jq '.[0].number // empty' || echo "")
+          if [[ -n "$pr_number" ]]; then
+            {
+              echo ""
+              echo "Companion to #${pr_number}, which adds the matching \`updatelists/*.xml\`."
+            } >> "${{ runner.temp }}/pr-body.md"
+          fi
+
+      # hashFiles() only sees the workspace, so check for the file in the shell.
+      - name: Publish the run summary
+        if: always()
+        run: |
+          if [[ -f "${{ runner.temp }}/pr-body.md" ]]; then
+            cat "${{ runner.temp }}/pr-body.md" >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Create Pull Request
+        if: steps.hashes.outputs.changed == 'true'
+        uses: peter-evans/create-pull-request@v7
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: 'Add checksums for ${{ steps.hashes.outputs.label }}'
+          title: 'Add checksums for ${{ steps.hashes.outputs.version }} (${{ steps.hashes.outputs.build_date }})'
+          body-path: ${{ runner.temp }}/pr-body.md
+          branch: 'auto-readme-hashes'
+          base: 'main'
+          delete-branch: true
+          add-paths: |
+            README.md
