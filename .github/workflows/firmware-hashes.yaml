@@ -25,7 +25,7 @@ permissions:
   contents: write
   pull-requests: write
 
-# Two runs downloading the same 2.7GB of firmware at once would be pointless.
+# Two runs streaming the same 2.7GB of firmware at once would be pointless.
 concurrency:
   group: firmware-hashes
   cancel-in-progress: false
@@ -38,7 +38,7 @@ jobs:
       github.event.workflow_run.conclusion == 'success'
 
     runs-on: ubuntu-latest
-    # The two images are ~1.2GB and ~1.4GB. Downloading them from Sony's CDN
+    # The two images are ~1.2GB and ~1.4GB. Streaming them from Sony's CDN
     # takes a few minutes, but leave room for a slow day.
     timeout-minutes: 90
 
@@ -72,26 +72,16 @@ jobs:
               >> "$GITHUB_STEP_SUMMARY"
           fi
 
-      - name: Show disk space before downloading
-        if: steps.existing.outputs.open == '0'
-        run: df -h /
-
-      # update_readme_hashes.sh exits without touching anything when the
-      # README already has the checksums, so this is a cheap no-op on the runs
-      # where "Check updatelist.xml" found nothing new.
-      - name: Download the firmware and write the checksums into README.md
+      # update_readme_hashes.py exits without touching anything when the README
+      # already has the checksums, so this is a cheap no-op on the runs where
+      # "Check updatelist.xml" found nothing new. Both images are streamed and
+      # hashed as they arrive, so neither is ever written to the runner's disk.
+      - name: Hash the firmware and write the checksums into README.md
         id: hashes
         if: steps.existing.outputs.open == '0'
         env:
           PS5FW_SUMMARY_FILE: ${{ runner.temp }}/pr-body.md
-          # Each image is deleted as soon as it has been hashed, so the peak
-          # usage is one image rather than both.
-          PS5FW_WORKDIR: ${{ runner.temp }}/ps5fw
-        run: bash update_readme_hashes.sh
-
-      - name: Show disk space after downloading
-        if: always() && steps.existing.outputs.open == '0'
-        run: df -h /
+        run: python3 update_readme_hashes.py
 
       - name: Link the updatelist.xml pull request, if one is open
         if: steps.hashes.outputs.changed == 'true'
