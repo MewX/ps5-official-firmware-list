@@ -1,0 +1,38 @@
+name: Tests
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Show the Python version
+        run: python3 --version
+
+      # The suite is pure text processing against local file:// fixtures: no
+      # network access and no firmware downloads, so it costs seconds rather
+      # than the gigabytes the real job moves. Standard library only, so there
+      # is nothing to install.
+      - name: Run the test suite
+        run: python3 -m unittest discover -s tests -t . -v
+
+      # A virtualenv rather than a bare pip install: the runner's Python may be
+      # externally managed (PEP 668), which would reject installing into it.
+      - name: Lint
+        run: |
+          python3 -m venv "$RUNNER_TEMP/lint"
+          "$RUNNER_TEMP/lint/bin/pip" install --quiet ruff
+          "$RUNNER_TEMP/lint/bin/ruff" check .
