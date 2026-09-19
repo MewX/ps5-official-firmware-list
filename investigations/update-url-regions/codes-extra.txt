@@ -1,0 +1,47 @@
+# Codes outside ISO 3166-1 alpha-2 that Sony might plausibly use, plus controls:
+# ccTLD-style (uk), continental/market groupings, ISO 3166-1 alpha-3 samples,
+# ISO 3166-1 numeric samples, case variants, and invalid codes.
+uk
+eu
+ac
+su
+en
+ap
+na
+latam
+emea
+apac
+asia
+intl
+world
+all
+usa
+jpn
+gbr
+deu
+fra
+aus
+bra
+chn
+rus
+kor
+twn
+mex
+sau
+can
+esp
+ita
+nld
+840
+392
+826
+276
+US
+JP
+Us
+uS
+u
+usx
+zz
+xx
+x

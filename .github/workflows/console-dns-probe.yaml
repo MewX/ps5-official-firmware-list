@@ -1,0 +1,38 @@
+# TEMPORARY workflow: runs the cross-console DNS probe from a runner with
+# unrestricted network access and commits the results.
+# Manual dispatch only, and removed once the results are in.
+name: Console DNS probe (temporary)
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Probe
+        run: bash investigations/update-url-regions/console_dns_probe.sh probe_out
+
+      - name: Collect results
+        run: |
+          D=investigations/update-url-regions/results
+          cp probe_out/results.tsv "$D/console_dns.tsv"
+          cp probe_out/summary.txt "$D/console_dns_summary.txt"
+          echo "== summary =="
+          cat "$D/console_dns_summary.txt"
+
+      - name: Commit results
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add investigations/update-url-regions/results
+          git commit -m "Cross-console DNS probe results (#8)" || exit 0
+          git pull --rebase origin "${GITHUB_REF_NAME}" || true
+          git push origin "HEAD:${GITHUB_REF_NAME}"
