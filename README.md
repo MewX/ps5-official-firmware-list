@@ -18,74 +18,18 @@ http://fjp01.ps5.update.playstation.net/update/ps5/official/tJMRE80IbXnE9YuG0jzT
 http://fus01.ps5.update.playstation.net/update/ps5/official/tJMRE80IbXnE9YuG0jzTXgKEjIMoabr6/list/us/updatelist.xml
 ```
 
-### What is `<OBFUSCATED_STRING>`?
+`<OBFUSCATED_STRING>` is not derived from the firmware version and cannot be calculated: it is the
+constant `tJMRE80IbXnE9YuG0jzTXgKEjIMoabr6` for every version and every region.
 
-There is nothing to calculate: it is **not** derived from the firmware version. It is a fixed path segment
-of Sony's update service, and it is the same for every firmware version and every region. Every
-`updatelist.xml` archived under [`updatelists/`](updatelists/) uses the same value, and so does
-[`check_updatelist.sh`](check_updatelist.sh), which simply hardcodes it:
+`<REGION>` is one of 8 values only — `au`, `br`, `cn`, `jp`, `ru`, `sa`, `uk`, `us` — and all 8 lists
+advertise the identical firmware, so the region does not change what you download.
 
-```
-tJMRE80IbXnE9YuG0jzTXgKEjIMoabr6
-```
+In the `PS5UPDATE.PUP` download URL that `updatelist.xml` points at, the `sys_<SHA256>` path segment is
+the SHA-256 of the file itself, i.e. the "sha256" column of the tables below (recovery images use
+`rec_<SHA256>`), and `<BUILD_DATE>` is the "Build Date" column.
 
-It must match exactly: changing its case, truncating it, or dropping it gives `404 Not found`. The PS4 and
-PS3 update services use the same URL shape but a different string of their own.
-
-### What is `<REGION>`?
-
-Only **8** regions serve an update list. They are Sony's own market codes rather than ISO 3166-1 country
-codes: only 7 of the 249 officially assigned ISO 3166-1 alpha-2 codes are among them, and the eighth,
-`uk`, is not an ISO 3166-1 country code at all (ISO 3166-1 assigns `gb`). Everything else returns
-`404 Not found` — the other 242 ISO alpha-2 codes (no `de`, `fr`, `ca`, `kr`, `hk`, `in`, ...), every
-alpha-3 and numeric code, every uppercase spelling, and groupings such as `eu`:
-
-| `<REGION>` | Country of the code |
-| ---------- | ------------------- |
-| `au`       | Australia           |
-| `br`       | Brazil              |
-| `cn`       | China               |
-| `jp`       | Japan               |
-| `ru`       | Russia              |
-| `sa`       | Saudi Arabia        |
-| `uk`       | United Kingdom      |
-| `us`       | United States       |
-
-Countries without their own list are presumably served by the nearest of these; which console uses which
-list is decided by the console, so that mapping cannot be observed from outside.
-
-The hostname is cosmetic. Twelve `f<CC>01` names resolve (the 8 above plus `eu`, `kr`, `mx` and `tw`, which
-have no list of their own), they all resolve to the same Akamai endpoint, and each one serves all 8 regions:
-`http://fjp01.../list/us/updatelist.xml` returns exactly the same bytes as `http://fus01.../list/us/updatelist.xml`.
-Only the `/list/<REGION>/` path segment selects the content.
-
-The 8 lists all advertise the same firmware — same version, same size, same SHA-256 — and differ only in
-three cosmetic places: the `<region id>` attribute, the `d<REGION>01` hostname inside the image URL, and the
-`?dest=<REGION>` query parameter. The download servers ignore `?dest=`, and all 8 of them serve the
-byte-identical `PS5UPDATE.PUP`. In other words, region choice does not change which firmware you get.
-
-The raw evidence is archived in [`region-probe/`](region-probe/), and can be regenerated with
-[`region_probe.sh`](region_probe.sh) and [`region_report.py`](region_report.py).
-
-### Anatomy of a `PS5UPDATE.PUP` URL
-
-The `<image>` element of `updatelist.xml` points at the firmware file itself:
-
-```
-http://dus01.ps5.update.playstation.net/update/ps5/official/<OBFUSCATED_STRING>/image/<BUILD_DATE>/sys_<SHA256>/PS5UPDATE.PUP?dest=us
-```
-
-| Part                  | Changes per firmware? | Where it comes from                                                                   |
-| --------------------- | --------------------- | ------------------------------------------------------------------------------------- |
-| `<OBFUSCATED_STRING>` | No                    | The constant above                                                                      |
-| `<BUILD_DATE>`        | Yes                   | The `YYYY_MMDD` build date, i.e. the "Build Date" column of the tables below             |
-| `sys_<SHA256>`        | Yes                   | The SHA-256 of `PS5UPDATE.PUP` itself, i.e. the "sha256" column below. Recovery images use `rec_<SHA256>` |
-
-Note the download host is `d...01` (download), while the update list host is `f...01`.
-
-Neither the build date nor the SHA-256 can be computed in advance: read them from `updatelist.xml`, from
-the [PS5 system software page](https://www.playstation.com/en-us/support/hardware/ps5/system-software/),
-or from the tables below.
+See [investigations/update-url-regions/](investigations/update-url-regions/) for the full URL anatomy,
+the region list and the measurements behind them.
 
 ## The Full List
 
