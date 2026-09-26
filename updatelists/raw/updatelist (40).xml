@@ -1,0 +1,30 @@
+<?xml version="1.0" ?>
+<update_data_list>
+	<region id="us">
+		<force_update>
+			<system auto_update_version="00.00" sdk_version="02.25.00.01-00.00.00.0.0" upd_version="02.25.00.00">
+				<conditional_requirement auto_update_version="00.00" id="CUSA08829" sdk_version="2.26.00.01-00.00.00.0.0" type="title" upd_version="2.26.00.00"/>
+				<conditional_requirement auto_update_version="00.00" id="CUSA15239" sdk_version="2.26.00.01-00.00.00.0.0" type="title" upd_version="2.26.00.00"/>
+				<conditional_requirement auto_update_version="00.00" id="CUSA15240" sdk_version="2.26.00.01-00.00.00.0.0" type="title" upd_version="2.26.00.00"/>
+				<conditional_requirement auto_update_version="00.00" id="CUSA15277" sdk_version="2.26.00.01-00.00.00.0.0" type="title" upd_version="2.26.00.00"/>
+				<conditional_requirement auto_update_version="00.00" id="CUSA15278" sdk_version="2.26.00.01-00.00.00.0.0" type="title" upd_version="2.26.00.00"/>
+				<conditional_requirement auto_update_version="00.00" id="CUSA15279" sdk_version="2.26.00.01-00.00.00.0.0" type="title" upd_version="2.26.00.00"/>
+				<conditional_requirement auto_update_version="00.00" id="CUSA15280" sdk_version="2.26.00.01-00.00.00.0.0" type="title" upd_version="2.26.00.00"/>
+				<conditional_requirement auto_update_version="00.00" id="CUSA15281" sdk_version="2.26.00.01-00.00.00.0.0" type="title" upd_version="2.26.00.00"/>
+				<conditional_requirement auto_update_version="00.00" id="CUSA15283" sdk_version="2.26.00.01-00.00.00.0.0" type="title" upd_version="2.26.00.00"/>
+				<conditional_requirement auto_update_version="00.00" id="CUSA15536" sdk_version="2.26.00.01-00.00.00.0.0" type="title" upd_version="2.26.00.00"/>
+				<conditional_requirement auto_update_version="00.00" id="CUSA15556" sdk_version="2.26.00.01-00.00.00.0.0" type="title" upd_version="2.26.00.00"/>
+				<conditional_requirement auto_update_version="00.00" id="CUSA15010" sdk_version="2.26.00.01-00.00.00.0.0" type="title" upd_version="2.26.00.00"/>
+				<conditional_requirement auto_update_version="00.00" id="CUSA24267" sdk_version="2.26.00.01-00.00.00.0.0" type="title" upd_version="2.26.00.00"/>
+				<conditional_requirement auto_update_version="00.00" id="CUSA24268" sdk_version="2.26.00.01-00.00.00.0.0" type="title" upd_version="2.26.00.00"/>
+				<conditional_requirement auto_update_version="00.00" id="CUSA24269" sdk_version="2.26.00.01-00.00.00.0.0" type="title" upd_version="2.26.00.00"/>
+				<conditional_requirement auto_update_version="00.00" id="CUSA24625" sdk_version="2.26.00.01-00.00.00.0.0" type="title" upd_version="2.26.00.00"/>
+			</system>
+		</force_update>
+		<system_pup auto_update_version="00.00" label="20.02.02.26.00.00-00.00.00.0.0" sdk_version="02.26.00.00-00.00.00.0.0" upd_version="02.26.00.00">
+			<update_data update_type="full">
+				<image size="867979264">http://dus01.ps5.update.playstation.net/update/ps5/official/tJMRE80IbXnE9YuG0jzTXgKEjIMoabr6/image/2020_1120/sys_018070e28a66cc31b405b0383109a6b2395c4e3853042176a001ec6582737c64/PS5UPDATE.PUP?dest=us</image>
+			</update_data>
+		</system_pup>
+	</region>
+</update_data_list>
