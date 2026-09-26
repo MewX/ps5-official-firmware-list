@@ -104,10 +104,10 @@ To download the latest firmware, go to: https://www.playstation.com/en-us/suppor
 | 24.05-09.60.00.04-00.00.00.0.1 | 09.60.00        | ❤️‍🩹 Recovery | 2024_0718       | 818b97764b2e838269cf49f53070d1472559c576daa002bf134ddfaec459364e | 6fd55056d524ef531d315d55bb41d6e0 | 1343993856 B |
 | 24.04-09.40.00.08-00.00.00.0.1 | 09.40.00        | 🆙 Update   | 2024_0607       | e631e06cd1d884ca2692158449b9d89924e88e91ed82fc15e87c1abb0a401e0e | 1f6def92f144a112cb90bf6f22f37eec | 1189964800 B |
 | 24.04-09.40.00.08-00.00.00.0.1 | 09.40.00        | ❤️‍🩹 Recovery | 2024_0607       | adfb7f85f7d41a9017423465e56f589afecce71fdbab51ed5c54eca6ee33e20a | 4823c827d21f02d42dd519f7fd8af23a | 1341671936 B |
-| 24.03-09.20.00.05-00.00.00.0.1 | 09.20.00        | 🆙 Update   | 2024_0418       | 375619c7da0b4aa5868a13c09b5d120afd7a53e3eb1ba29a35d7d8b59179e318 | md5                              | size   |
-| 24.03-09.20.00.05-00.00.00.0.1 | 09.20.00        | ❤️‍🩹 Recovery | 2024_0418       | 9a4be7beadb702f5dcf65fd4f360af985d61b938f8d2c11bf0f689b8868325e6 | md5                              | size   |
-| 24.02-09.00.00.45-00.00.00.0.1 | 09.00.00        | 🆙 Update   | 2024_0309       | e061c9c8bf711202afd13da7f7ea76729a5708e572788bee9e0cbe5d40f70d28 | md5                              | size   |
-| 24.02-09.00.00.45-00.00.00.0.1 | 09.00.00        | ❤️‍🩹 Recovery | 2024_0309       | 236c69911146b63ab4e92e8f508911e45bd9a7ef2dcc59245d4fe1d2b5c4e5d7 | md5                              | size   |
+| 24.03-09.20.00.05-00.00.00.0.1 | 09.20.00        | 🆙 Update   | 2024_0418       | 375619c7da0b4aa5868a13c09b5d120afd7a53e3eb1ba29a35d7d8b59179e318 | f2b1ef901db23a8d2cbe7e154c9d6975 | size   |
+| 24.03-09.20.00.05-00.00.00.0.1 | 09.20.00        | ❤️‍🩹 Recovery | 2024_0418       | 9a4be7beadb702f5dcf65fd4f360af985d61b938f8d2c11bf0f689b8868325e6 | da8f079d82e742c3c76b125810799f0f | size   |
+| 24.02-09.00.00.45-00.00.00.0.1 | 09.00.00        | 🆙 Update   | 2024_0309       | e061c9c8bf711202afd13da7f7ea76729a5708e572788bee9e0cbe5d40f70d28 | e74ddccd3360941ca24475c13195e031 | size   |
+| 24.02-09.00.00.45-00.00.00.0.1 | 09.00.00        | ❤️‍🩹 Recovery | 2024_0309       | 236c69911146b63ab4e92e8f508911e45bd9a7ef2dcc59245d4fe1d2b5c4e5d7 | 6fbbda82c325bb5d6ec0717c2223b5c0 | size   |
 
 ### 08.x
 | Firmware Version (Long)        | Version (Short) | Type     | Build Date      | sha256                                                           | md5 checksum                     | size   |
