@@ -123,7 +123,7 @@ def main(argv: list[str] | None = None) -> int:
         take("sys", release.sys_url)
         if need_recovery:
             take("rec", recovery_url)
-        else:
+        elif not recovery_url:
             log(f"Adding placeholder recovery row for build {release.build_date}")
             rows.append(
                 ps5fw.format_placeholder_row(
