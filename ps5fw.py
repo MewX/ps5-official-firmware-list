@@ -44,6 +44,7 @@ FALLBACK_TABLE_SEPARATOR = (
 
 # The trailing spaces line the column up the way the rest of the table does.
 TYPE_CELLS = {"sys": "\N{SQUARED UP WITH EXCLAMATION MARK} Update  ", "rec": "❤️‍\U0001fa79 Recovery"}
+DEFAULT_PLACEHOLDER = "waiting for sony to update"
 
 
 class Ps5fwError(Exception):
@@ -284,6 +285,34 @@ def format_row(
     return f"| {label} | {version:<15} | {type_cell} | {build_date:<15} | {sha256} | {md5} | {size} B |"
 
 
+def format_placeholder_row(
+    label: str,
+    version: str,
+    kind: str,
+    build_date: str,
+    placeholder: str = DEFAULT_PLACEHOLDER,
+) -> str:
+    """Render a table row when checksums are not yet available."""
+    try:
+        type_cell = TYPE_CELLS[kind]
+    except KeyError:
+        raise ValueError(f"unknown image kind: {kind!r}") from None
+    return (
+        f"| {label} | {version:<15} | {type_cell} | {build_date:<15} "
+        f"| {placeholder} | {placeholder} | {placeholder} |"
+    )
+
+
+def is_placeholder_row(line: str) -> bool:
+    """Check if a table line represents an unfilled placeholder row."""
+    plain = line.strip()
+    if not plain.startswith("|") or plain.startswith(TABLE_HEADER_PREFIX) or SEPARATOR_RE.match(plain):
+        return False
+    # A real firmware entry contains a 64-character hexadecimal SHA-256 digest.
+    # Placeholder rows lack a real SHA-256 and contain placeholders like 'waiting for sony to update' or 'TODO'.
+    return not bool(re.search(r"\b[0-9a-fA-F]{64}\b", plain))
+
+
 def read_raw(path: str | Path) -> str:
     """Read a text file with its line endings untranslated."""
     with Path(path).open(encoding="utf-8", newline="") as handle:
@@ -416,6 +445,7 @@ class Readme:
 
         Used to backfill a recovery image whose update image is already listed,
         so the pair stays adjacent instead of jumping to the top of the table.
+        If any placeholder rows sit immediately below the anchor, they are replaced.
         """
         if not rows:
             raise ValueError("refusing to insert an empty set of rows")
@@ -424,7 +454,10 @@ class Readme:
         for index, line in enumerate(self.lines):
             if needle in line.lower():
                 at = index + 1
-                self.lines[at:at] = [self._render(row) for row in rows]
+                end = at
+                while end < len(self.lines) and is_placeholder_row(self.lines[end]):
+                    end += 1
+                self.lines[at:end] = [self._render(row) for row in rows]
                 return
         raise ReadmeError(f"no README row contains {checksum}")
 

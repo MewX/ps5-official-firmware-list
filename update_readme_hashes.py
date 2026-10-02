@@ -121,7 +121,18 @@ def main(argv: list[str] | None = None) -> int:
 
     if need_update:
         take("sys", release.sys_url)
-    if need_recovery:
+        if need_recovery:
+            take("rec", recovery_url)
+        elif not recovery_url:
+            log(f"Adding placeholder recovery row for build {release.build_date}")
+            rows.append(
+                ps5fw.format_placeholder_row(
+                    release.label, release.version, "rec", release.build_date
+                )
+            )
+            label = "❤️‍\U0001fa79 Recovery"
+            added.append(f"- {label} ({ps5fw.DEFAULT_PLACEHOLDER})")
+    elif need_recovery:
         take("rec", recovery_url)
 
     # 4. Write the README.
@@ -137,7 +148,14 @@ def main(argv: list[str] | None = None) -> int:
     readme.save()
     log(f"{args.readme} updated")
 
+    if not need_update and need_recovery:
+        mode = "rec"
+    elif need_update and not recovery_url:
+        mode = "placeholder"
+    else:
+        mode = "both"
     set_output("changed", "true")
+    set_output("mode", mode)
     set_output("version", release.version)
     set_output("label", release.label)
     set_output("build_date", release.build_date)
@@ -145,36 +163,52 @@ def main(argv: list[str] | None = None) -> int:
     set_output("new_section", str(new_section).lower())
 
     if args.summary_file:
-        summary = [
-            f"Checksums for PS5 firmware `{release.label}` "
-            f"(`{release.version}`, built `{release.build_date}`).",
-            "",
-            "| Image | Source |",
-            "| ----- | ------ |",
-            *sources,
-            "",
-            "Added to the README:",
-            "",
-            *added,
-            "",
-        ]
-        if new_section:
-            summary += [
-                f"This release bumps the major version, so a new "
-                f"`### {release.major}.x` section was created.",
+        if not need_update and need_recovery:
+            summary = [
+                f"Backfilled recovery checksum for PS5 firmware `{release.label}` "
+                f"(`{release.version}`, built `{release.build_date}`).",
+                "",
+                "| Image | Source |",
+                "| ----- | ------ |",
+                *sources,
+                "",
+                "Replaced the placeholder row in the README with the verified recovery checksums:",
+                "",
+                *added,
+                "",
+                "Every image was verified against the sha256 that Sony embeds in its download URL.",
+            ]
+        else:
+            summary = [
+                f"Checksums for PS5 firmware `{release.label}` "
+                f"(`{release.version}`, built `{release.build_date}`).",
+                "",
+                "| Image | Source |",
+                "| ----- | ------ |",
+                *sources,
+                "",
+                "Added to the README:",
+                "",
+                *added,
                 "",
             ]
-        if need_update and not recovery_url:
-            summary += [
-                "> [!WARNING]",
-                f"> No recovery image for build `{release.build_date}` was found on the",
-                "> support page, so only the update row was added. The recovery row still",
-                "> needs to be filled in.",
-                "",
-            ]
-        summary.append(
-            "Every image was verified against the sha256 that Sony embeds in its download URL."
-        )
+            if new_section:
+                summary += [
+                    f"This release bumps the major version, so a new "
+                    f"`### {release.major}.x` section was created.",
+                    "",
+                ]
+            if need_update and not recovery_url:
+                summary += [
+                    "> [!WARNING]",
+                    f"> No recovery image for build `{release.build_date}` was found on the",
+                    "> support page, so a placeholder row was added. The recovery row still",
+                    "> needs to be filled in once Sony updates the support page.",
+                    "",
+                ]
+            summary.append(
+                "Every image was verified against the sha256 that Sony embeds in its download URL."
+            )
         write_summary(args.summary_file, summary)
 
     return 0

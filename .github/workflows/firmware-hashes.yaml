@@ -109,8 +109,10 @@ jobs:
         uses: peter-evans/create-pull-request@v7
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          commit-message: 'Add checksums for ${{ steps.hashes.outputs.label }}'
-          title: 'Add checksums for ${{ steps.hashes.outputs.version }} (${{ steps.hashes.outputs.build_date }})'
+          commit-message: >-
+            ${{ steps.hashes.outputs.mode == 'rec' && format('Add recovery checksum for {0}', steps.hashes.outputs.label) || format('Add checksums for {0}', steps.hashes.outputs.label) }}
+          title: >-
+            ${{ steps.hashes.outputs.mode == 'rec' && format('Add recovery checksum for {0} ({1})', steps.hashes.outputs.version, steps.hashes.outputs.build_date) || format('Add checksums for {0} ({1})', steps.hashes.outputs.version, steps.hashes.outputs.build_date) }}
           body-path: ${{ runner.temp }}/pr-body.md
           branch: 'auto-readme-hashes'
           base: 'main'
