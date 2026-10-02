@@ -172,6 +172,9 @@ class TestMajorVersionBump(UpdaterTestCase):
         text = self.result.readme_text
         self.assertLess(text.index(sha_of(SYS_BODY)), text.index(sha_of(REC_BODY)))
 
+    def test_it_reports_mode(self):
+        self.assertEqual(self.result.outputs["mode"], "both")
+
     def test_the_rows_match_the_house_format(self):
         self.assertIn(
             ps5fw.format_row(LABEL_15, "15.00.00", "sys", "2027_0210",
@@ -300,6 +303,12 @@ class TestMissingRecovery(UpdaterTestCase):
     def test_the_summary_flags_it(self):
         self.assertIn("needs to be filled in", self.result.summary)
 
+    def test_the_placeholder_recovery_row_was_added(self):
+        self.assertIn(ps5fw.DEFAULT_PLACEHOLDER, self.result.readme_text)
+
+    def test_it_reports_mode(self):
+        self.assertEqual(self.result.outputs["mode"], "placeholder")
+
 
 class TestUnreachableSupportPage(UpdaterTestCase):
     def setUp(self):
@@ -347,6 +356,14 @@ class TestRecoveryBackfill(UpdaterTestCase):
 
     def test_no_duplicate_section_was_created(self):
         self.assertEqual(self.result.readme_text.count("### 15.x"), 1)
+
+    def test_the_recovery_row_replaces_the_placeholder(self):
+        rows = [line for line in self.result.readme_text.splitlines() if LABEL_15 in line]
+        self.assertEqual(len(rows), 2)
+        self.assertTrue(all(ps5fw.DEFAULT_PLACEHOLDER not in line for line in rows))
+
+    def test_it_reports_mode(self):
+        self.assertEqual(self.result.outputs["mode"], "rec")
 
 
 class TestSizeMismatch(UpdaterTestCase):

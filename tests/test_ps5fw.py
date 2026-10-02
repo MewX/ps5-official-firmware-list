@@ -261,6 +261,26 @@ class TestFormatRow(unittest.TestCase):
         with self.assertRaises(ValueError):
             ps5fw.format_row("x", "15.00.00", "nope", "2027_0210", "a" * 64, "b" * 32, 1)
 
+    def test_format_placeholder_row(self):
+        row = ps5fw.format_placeholder_row(
+            "26.06-14.10.00.03-00.00.00.0.1", "14.10.00", "rec", "2026_0928"
+        )
+        self.assertEqual(
+            row,
+            "| 26.06-14.10.00.03-00.00.00.0.1 | 14.10.00        | ❤️‍\U0001fa79 Recovery | 2026_0928       | waiting for sony to update | waiting for sony to update | waiting for sony to update |",
+        )
+
+    def test_is_placeholder_row(self):
+        placeholder = ps5fw.format_placeholder_row(
+            "26.06-14.10.00.03-00.00.00.0.1", "14.10.00", "rec", "2026_0928"
+        )
+        self.assertTrue(ps5fw.is_placeholder_row(placeholder))
+        self.assertTrue(ps5fw.is_placeholder_row("| label | ver | ❤️‍\U0001fa79 Recovery | 2026_0928 | TODO_SHA256 | TODO_MD5 | TODO |"))
+        self.assertFalse(ps5fw.is_placeholder_row(TestInsertRows.NEW_ROW))
+        self.assertFalse(ps5fw.is_placeholder_row(HEADER))
+        self.assertFalse(ps5fw.is_placeholder_row(SEPARATOR))
+        self.assertFalse(ps5fw.is_placeholder_row("### 14.x"))
+
 
 class TestReadmeLookups(TempReadmeMixin, unittest.TestCase):
     def setUp(self):
@@ -444,6 +464,25 @@ class TestInsertRows(TempReadmeMixin, unittest.TestCase):
         )
         readme.insert_after_hash(anchor, [backfill])
         body = self.section_body(readme, "13")
+        self.assertEqual(body[body.index(backfill) - 1].split("|")[5].strip(), anchor)
+
+    def test_backfill_replaces_placeholder_row(self):
+        readme = self.write_readme()
+        anchor = "bbbb" + "0" * 59 + "1"
+        placeholder = ps5fw.format_placeholder_row(
+            "26.05-13.60.00.07-00.00.00.0.1", "13.60.00", "rec", "2026_0717"
+        )
+        anchor_idx = next(i for i, line in enumerate(readme.lines) if anchor in line)
+        readme.lines.insert(anchor_idx + 1, placeholder + readme.eol)
+
+        backfill = ps5fw.format_row(
+            "26.05-13.60.00.07-00.00.00.0.1", "13.60.00", "rec", "2026_0717",
+            "bbbb" + "0" * 59 + "2", "8888888888888888888888888888bbbb", 1404953088,
+        )
+        readme.insert_after_hash(anchor, [backfill])
+        body = self.section_body(readme, "13")
+        self.assertIn(backfill, body)
+        self.assertNotIn(placeholder, body)
         self.assertEqual(body[body.index(backfill) - 1].split("|")[5].strip(), anchor)
 
     def test_backfilling_against_an_unknown_checksum_fails(self):
