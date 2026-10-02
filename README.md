@@ -39,7 +39,7 @@ To download the latest firmware, go to: https://www.playstation.com/en-us/suppor
 | Firmware Version (Long)        | Version (Short) | Type     | Build Date      | sha256                                                           | md5 checksum                     | size   |
 | ------------------------------ | --------------- | -------- | --------------- | ---------------------------------------------------------------- | -------------------------------- | ------ |
 | 26.06-14.10.00.03-00.00.00.0.1 | 14.10.00        | 🆙 Update   | 2026_0928       | c17384946df6e5c85b2d72cbeee2057b165bf90279d9e2a86d527d0778cdaaf6 | f7853a0fa97a9a7828ac548798012782 | 1261408256 B |
-| 26.06-14.10.00.03-00.00.00.0.1 | 14.10.00        | ❤️‍🩹 Recovery | 2026_0928       | waiting for sony to update | waiting for sony to update | waiting for sony to update |
+| 26.06-14.10.00.03-00.00.00.0.1 | 14.10.00        | ❤️‍🩹 Recovery | 2026_0928       | 9f3a0b8811c00ab52b092d2e9f0f13dd4515f018361ff38e4be43fd8c18b21de | 1ee5c1a9c59461ed043720a9a8397b2a | 1418890240 B |
 | 26.06-14.00.00.39-00.00.00.0.1 | 14.00.00        | 🆙 Update   | 2026_0909       | 1eb4b18451e0f064fc23b5bd4c95cae7f6489f9ad1148b5dfb0d66452a108ebc | 6e100a2f04a0e4c7b0418c72b4f7e1a9 | 1260600832 B |
 | 26.06-14.00.00.39-00.00.00.0.1 | 14.00.00        | ❤️‍🩹 Recovery | 2026_0909       | 7ec8dd8a6f518370422844d2c9d670316774d3dc9d52d78a676a3452ff63c556 | ad45f49f0264ec49d53edb069e4b549c | 1418082816 B |
 
