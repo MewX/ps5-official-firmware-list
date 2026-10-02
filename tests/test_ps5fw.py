@@ -267,7 +267,8 @@ class TestFormatRow(unittest.TestCase):
         )
         self.assertEqual(
             row,
-            "| 26.06-14.10.00.03-00.00.00.0.1 | 14.10.00        | ❤️‍\U0001fa79 Recovery | 2026_0928       | waiting for sony to update | waiting for sony to update | waiting for sony to update |",
+            "| 26.06-14.10.00.03-00.00.00.0.1 | 14.10.00        | ❤️‍\U0001fa79 Recovery | 2026_0928       "
+            "| waiting for sony to update | waiting for sony to update | waiting for sony to update |",
         )
 
     def test_is_placeholder_row(self):
@@ -275,7 +276,11 @@ class TestFormatRow(unittest.TestCase):
             "26.06-14.10.00.03-00.00.00.0.1", "14.10.00", "rec", "2026_0928"
         )
         self.assertTrue(ps5fw.is_placeholder_row(placeholder))
-        self.assertTrue(ps5fw.is_placeholder_row("| label | ver | ❤️‍\U0001fa79 Recovery | 2026_0928 | TODO_SHA256 | TODO_MD5 | TODO |"))
+        self.assertTrue(
+            ps5fw.is_placeholder_row(
+                "| label | ver | ❤️‍\U0001fa79 Recovery | 2026_0928 | TODO_SHA256 | TODO_MD5 | TODO |"
+            )
+        )
         self.assertFalse(ps5fw.is_placeholder_row(TestInsertRows.NEW_ROW))
         self.assertFalse(ps5fw.is_placeholder_row(HEADER))
         self.assertFalse(ps5fw.is_placeholder_row(SEPARATOR))

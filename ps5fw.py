@@ -297,7 +297,10 @@ def format_placeholder_row(
         type_cell = TYPE_CELLS[kind]
     except KeyError:
         raise ValueError(f"unknown image kind: {kind!r}") from None
-    return f"| {label} | {version:<15} | {type_cell} | {build_date:<15} | {placeholder} | {placeholder} | {placeholder} |"
+    return (
+        f"| {label} | {version:<15} | {type_cell} | {build_date:<15} "
+        f"| {placeholder} | {placeholder} | {placeholder} |"
+    )
 
 
 def is_placeholder_row(line: str) -> bool:

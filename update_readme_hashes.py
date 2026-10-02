@@ -148,7 +148,12 @@ def main(argv: list[str] | None = None) -> int:
     readme.save()
     log(f"{args.readme} updated")
 
-    mode = "rec" if (not need_update and need_recovery) else ("placeholder" if (need_update and not recovery_url) else "both")
+    if not need_update and need_recovery:
+        mode = "rec"
+    elif need_update and not recovery_url:
+        mode = "placeholder"
+    else:
+        mode = "both"
     set_output("changed", "true")
     set_output("mode", mode)
     set_output("version", release.version)
