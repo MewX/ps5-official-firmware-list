@@ -21,9 +21,9 @@
 				<conditional_requirement auto_update_version="00.00" id="PPSA40076" sdk_version="14.10.00.00-00.00.00.0.1" type="title" upd_version="14.10.00.00"/>
 			</system>
 		</force_update>
-		<system_pup auto_update_version="00.00" label="26.06-14.10.00.03-00.00.00.0.1" sdk_version="14.10.00.03-00.00.00.0.1" upd_version="14.10.00.00">
+		<system_pup auto_update_version="00.00" label="26.07-14.20.00.07-00.00.00.0.1" sdk_version="14.20.00.07-00.00.00.0.1" upd_version="14.20.00.00">
 			<update_data update_type="full">
-				<image size="1261408256">http://dus01.ps5.update.playstation.net/update/ps5/official/tJMRE80IbXnE9YuG0jzTXgKEjIMoabr6/image/2026_0928/sys_c17384946df6e5c85b2d72cbeee2057b165bf90279d9e2a86d527d0778cdaaf6/PS5UPDATE.PUP?dest=us</image>
+				<image size="1266086912">http://dus01.ps5.update.playstation.net/update/ps5/official/tJMRE80IbXnE9YuG0jzTXgKEjIMoabr6/image/2026_1014/sys_0f81be6fd890bc04925b3953e0862dfc2ead68edfdc33f31c3c60d0c267f68e4/PS5UPDATE.PUP?dest=us</image>
 			</update_data>
 		</system_pup>
 		<finished_test_list>
